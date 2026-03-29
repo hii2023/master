@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f6fa;
+            color: #1a1a2e;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 2.5rem 1.5rem 2rem;
+            text-align: center;
+        }
+        .avatar {
+            width: 88px; height: 88px;
+            border-radius: 50%;
+            border: 3px solid #e5e7eb;
+            object-fit: cover;
+        }
+        .header h1 { font-size: 1.8rem; margin-top: 0.75rem; font-weight: 700; }
+        .header .bio { color: #6b7280; margin-top: 0.3rem; font-size: 0.95rem; }
+        .github-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            margin-top: 0.75rem;
+            font-size: 0.82rem; color: #6b7280;
+            text-decoration: none;
+        }
+        .github-link:hover { color: #1a1a2e; }
+
+        /* ── STATS BAR ── */
+        .stats-bar {
+            display: flex; justify-content: center; gap: 1rem;
+            flex-wrap: wrap;
+            padding: 1.5rem 1.5rem 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .stat {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 0.75rem 1.75rem;
+            text-align: center;
+            min-width: 100px;
+        }
+        .stat .num { font-size: 1.6rem; font-weight: 700; color: #1a1a2e; }
+        .stat .label { font-size: 0.72rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+        /* ── SEARCH ── */
+        .search-bar {
+            max-width: 420px;
+            margin: 1.5rem auto 0;
+            padding: 0 1.5rem;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 0.65rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            background: white;
+            transition: border-color 0.2s;
+        }
+        .search-bar input:focus { border-color: #a5b4fc; }
+
+        /* ── GRID ── */
+        .container { max-width: 1100px; margin: 1.5rem auto 0; padding: 0 1.5rem 3rem; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.3rem;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+            transform: translateY(-3px);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.65rem;
+        }
+        .card-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+        .card-name {
+            font-size: 1rem; font-weight: 600;
+            color: #1a1a2e;
+            text-decoration: none;
+            word-break: break-word;
+        }
+        .card-name:hover { color: #4f46e5; text-decoration: underline; }
+
+        .card-desc {
+            font-size: 0.855rem;
+            color: #6b7280;
+            flex-grow: 1;
+            margin-bottom: 1rem;
+            line-height: 1.55;
+        }
+        .card-desc.no-desc { font-style: italic; color: #c0c4cc; }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .lang-badge {
+            font-size: 0.72rem;
+            padding: 0.2rem 0.65rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .updated { font-size: 0.7rem; color: #c0c4cc; }
+
+        .links { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .link-btn {
+            font-size: 0.72rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.15s;
+        }
+        .link-btn:hover { opacity: 0.8; }
+        .link-github { background: #1a1a2e; color: white; }
+        .link-live   { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+
+        /* ── LOADING / ERROR ── */
+        .loading-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: #9ca3af;
+        }
+        .spinner {
+            display: inline-block;
+            width: 36px; height: 36px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #6366f1;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 0.75rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .error-state { text-align: center; padding: 3rem; color: #ef4444; }
+
+        .no-results { text-align: center; padding: 3rem; color: #9ca3af; font-size: 0.9rem; }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.78rem;
+            color: #c0c4cc;
+            border-top: 1px solid #f0f0f0;
+        }
+        footer a { color: #c0c4cc; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 480px) {
+            .grid { grid-template-columns: 1fr; }
+            .stats-bar { gap: 0.6rem; }
+            .stat { padding: 0.6rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER: filled by JS -->
+<div class="header" id="profile-header">
+    <div class="loading-state">
+        <div class="spinner"></div><br>Loading profile…
+    </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats"></div>
+
+<!-- SEARCH -->
+<div class="search-bar">
+    <input id="search" type="text" placeholder="🔍  Search projects…" oninput="filterCards()" />
+</div>
+
+<!-- MAIN GRID -->
+<div class="container">
+    <div id="repos-grid" class="grid">
+        <div class="loading-state" style="grid-column:1/-1">
+            <div class="spinner"></div><br>Loading your projects…
+        </div>
+    </div>
+    <div id="no-results" class="no-results" style="display:none">No projects match your search.</div>
+</div>
+
+<footer>
+    ✨ Live from GitHub · Updates automatically on every visit ·
+    <a href="https://github.com/hii2023" target="_blank">github.com/hii2023</a>
+</footer>
+
+<script>
+/* ─────────────────────────────────────────────
+   CONFIG
+───────────────────────────────────────────── */
+const USERNAME = 'hii2023';
+
+/* Language → badge colours */
+const LANG_COLORS = {
+    HTML:       { bg: '#fff7ed', color: '#c2410c' },
+    CSS:        { bg: '#fdf4ff', color: '#9333ea' },
+    JavaScript: { bg: '#fefce8', color: '#ca8a04' },
+    TypeScript: { bg: '#eff6ff', color: '#2563eb' },
+    Python:     { bg: '#f0fdf4', color: '#16a34a' },
+    default:    { bg: '#f3f4f6', color: '#6b7280' }
+};
+
+/* Keyword → emoji icon */
+const ICON_MAP = [
+    ['whatsapp',  '💬'],
+    ['crm',       '📊'],
+    ['nosh7',     '🍱'],
+    ['food',      '🍽️'],
+    ['landing',   '🌐'],
+    ['outreach',  '📣'],
+    ['growth',    '📈'],
+    ['lead',      '🎯'],
+    ['invitation','💌'],
+    ['invite',    '💌'],
+    ['business',  '💼'],
+    ['item',      '📦'],
+    ['test',      '🧪'],
+    ['tool',      '🔧'],
+    ['sapna',     '✨'],
+    ['in',        '🌍'],
+];
+
+function getIcon(name) {
+    const lower = name.toLowerCase();
+    for (const [key, icon] of ICON_MAP) {
+        if (lower.includes(key)) return icon;
+    }
+    return '📁';
+}
+
+/* Smart descriptions when GitHub has none */
+const SMART_DESCS = {
+    'nosh7-whatsapp-crm':  'WhatsApp CRM system built for Nosh7 subscription management',
+    'nosh7-crm':           'Customer relationship management dashboard for Nosh7',
+    'nosh7-outreach':      'Outreach and marketing automation for Nosh7',
+    'landing-page-nosh7':  'Landing page for Nosh7 — built with TypeScript',
+    'nosh7-in':            'Nosh7 India web module',
+    'nosh7in':             'Additional Nosh7 website module',
+    'growth-hub':          'Growth tracking and analytics hub',
+    'invitation':          'Digital invitation page',
+    'leaqualify':          'Lead qualification tool',
+    'BusinessFirst':       'Business-focused web project',
+    'item':                'Item management web app',
+    'Test-Writing-Tool':   'Writing and test generation tool',
+    'SAPNA':               'SAPNA — JavaScript-powered project',
+};
+
+function getDesc(repo) {
+    if (repo.description) return { text: repo.description, empty: false };
+    const smart = SMART_DESCS[repo.name];
+    if (smart) return { text: smart, empty: false };
+    return { text: 'No description — add one on GitHub!', empty: true };
+}
+
+function timeAgo(dateStr) {
+    const diff = Math.floor((Date.now() - new Date(dateStr)) / 1000);
+    if (diff < 60)       return 'just now';
+    if (diff < 3600)     return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400)    return `${Math.floor(diff / 3600)}h ago`;
+    if (diff < 2592000)  return `${Math.floor(diff / 86400)}d ago`;
+    return new Date(dateStr).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
+}
+
+/* ─────────────────────────────────────────────
+   DATA FETCHING
+───────────────────────────────────────────── */
+async function fetchProfile() {
+    const r = await fetch(`https://api.github.com/users/${USERNAME}`);
+    return r.json();
+}
+
+async function fetchAllRepos() {
+    let page = 1, all = [];
+    while (true) {
+        const r = await fetch(
+            `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated&page=${page}`
+        );
+        const repos = await r.json();
+        if (!Array.isArray(repos) || !repos.length) break;
+        all = all.concat(repos);
+        if (repos.length < 100) break;
+        page++;
+    }
+    return all;
+}
+
+/* ─────────────────────────────────────────────
+   RENDER
+───────────────────────────────────────────── */
+let ALL_REPOS = [];
+
+function renderCard(repo) {
+    const desc    = getDesc(repo);
+    const lang    = LANG_COLORS[repo.language] || LANG_COLORS.default;
+    const icon    = getIcon(repo.name);
+    const live    = repo.homepage
+        ? `<a class="link-btn link-live" href="${repo.homepage}" target="_blank">🔗 Live</a>`
+        : '';
+    return `
+        <div class="card" data-name="${repo.name.toLowerCase()} ${(repo.description||'').toLowerCase()}">
+            <div class="card-top">
+                <span class="card-icon">${icon}</span>
+                <a class="card-name" href="${repo.html_url}" target="_blank">${repo.name}</a>
+            </div>
+            <p class="card-desc ${desc.empty ? 'no-desc' : ''}">${desc.text}</p>
+            <div class="card-footer">
+                <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
+                    ${repo.language
+                        ? `<span class="lang-badge" style="background:${lang.bg};color:${lang.color}">${repo.language}</span>`
+                        : ''}
+                    <span class="updated">Updated ${timeAgo(repo.updated_at)}</span>
+                </div>
+                <div class="links">
+                    ${live}
+                    <a class="link-btn link-github" href="${repo.html_url}" target="_blank">GitHub →</a>
+                </div>
+            </div>
+        </div>`;
+}
+
+function filterCards() {
+    const q = document.getElementById('search').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.card');
+    let visible = 0;
+    cards.forEach(c => {
+        const match = !q || c.dataset.name.includes(q);
+        c.style.display = match ? '' : 'none';
+        if (match) visible++;
+    });
+    document.getElementById('no-results').style.display = visible ? 'none' : 'block';
+}
+
+/* ─────────────────────────────────────────────
+   MAIN
+───────────────────────────────────────────── */
+async function init() {
+    try {
+        // Load profile + repos in parallel
+        const [profile, repos] = await Promise.all([fetchProfile(), fetchAllRepos()]);
+        ALL_REPOS = repos;
+
+        /* --- Profile header --- */
+        document.getElementById('profile-header').innerHTML = `
+            <img class="avatar" src="${profile.avatar_url}" alt="${profile.login}">
+            <h1>${profile.name || profile.login}</h1>
+            <p class="bio">${profile.bio || 'Builder &amp; Creator'}</p>
+            <a class="github-link" href="https://github.com/${USERNAME}" target="_blank">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2.2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.7 18 5 18 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>
+                github.com/${USERNAME}
+            </a>
+        `;
+        document.title = `${profile.name || profile.login}'s Projects`;
+
+        /* --- Stats --- */
+        const langs = [...new Set(repos.map(r => r.language).filter(Boolean))];
+        document.getElementById('stats').innerHTML = `
+            <div class="stat">
+                <div class="num">${repos.length}</div>
+                <div class="label">Projects</div>
+            </div>
+            <div class="stat">
+                <div class="num">${langs.length}</div>
+                <div class="label">Languages</div>
+            </div>
+            <div class="stat">
+                <div class="num">${repos.filter(r => r.homepage).length}</div>
+                <div class="label">Live Sites</div>
+            </div>
+            <div class="stat">
+                <div class="num">${repos.filter(r => r.stargazers_count > 0).length}</div>
+                <div class="label">Starred</div>
+            </div>
+        `;
+
+        /* --- Cards --- */
+        document.getElementById('repos-grid').innerHTML = repos.map(renderCard).join('');
+
+    } catch (err) {
+        document.getElementById('repos-grid').innerHTML =
+            `<div class="error-state" style="grid-column:1/-1">
+                ⚠️ Could not load projects. Check your internet connection and try again.<br>
+                <small style="color:#fca5a5">${err.message}</small>
+            </div>`;
+    }
+}
+
+init();
+</script>
+</body>
+</html>
