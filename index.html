@@ -5,270 +5,371 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Projects</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f6fa;
-            color: #1a1a2e;
             min-height: 100vh;
+            background: linear-gradient(160deg, #0a2342 0%, #0e4d6e 40%, #0d7d9e 75%, #1ab3cc 100%);
+            background-attachment: fixed;
+            color: #fff;
         }
 
         /* ── HEADER ── */
-        .header {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 2.5rem 1.5rem 2rem;
+        .hero {
             text-align: center;
+            padding: 3.5rem 1.5rem 2rem;
         }
-        .avatar {
-            width: 88px; height: 88px;
-            border-radius: 50%;
-            border: 3px solid #e5e7eb;
-            object-fit: cover;
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            color: #fff;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
         }
-        .header h1 { font-size: 1.8rem; margin-top: 0.75rem; font-weight: 700; }
-        .header .bio { color: #6b7280; margin-top: 0.3rem; font-size: 0.95rem; }
-        .github-link {
-            display: inline-flex; align-items: center; gap: 0.4rem;
-            margin-top: 0.75rem;
-            font-size: 0.82rem; color: #6b7280;
-            text-decoration: none;
+        .hero-title span {
+            background: linear-gradient(90deg, #7df9ff, #a8edff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .github-link:hover { color: #1a1a2e; }
+        .hero-sub {
+            color: rgba(255,255,255,0.65);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
 
-        /* ── STATS BAR ── */
-        .stats-bar {
-            display: flex; justify-content: center; gap: 1rem;
+        /* ── STATS ── */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
             flex-wrap: wrap;
-            padding: 1.5rem 1.5rem 0;
-            max-width: 900px;
-            margin: 0 auto;
+            margin-top: 1.75rem;
         }
-        .stat {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 0.75rem 1.75rem;
-            text-align: center;
-            min-width: 100px;
+        .stat-pill {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 40px;
+            padding: 0.45rem 1.1rem;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
         }
-        .stat .num { font-size: 1.6rem; font-weight: 700; color: #1a1a2e; }
-        .stat .label { font-size: 0.72rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+        .stat-pill strong { color: #fff; }
 
-        /* ── SEARCH ── */
-        .search-bar {
-            max-width: 420px;
-            margin: 1.5rem auto 0;
+        /* ── SEARCH + FILTERS ── */
+        .controls {
+            max-width: 700px;
+            margin: 2rem auto 0;
             padding: 0 1.5rem;
         }
-        .search-bar input {
-            width: 100%;
-            padding: 0.65rem 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            outline: none;
-            background: white;
-            transition: border-color 0.2s;
+        .search-wrap {
+            position: relative;
         }
-        .search-bar input:focus { border-color: #a5b4fc; }
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+        .search-wrap input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.6rem;
+            border-radius: 14px;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .search-wrap input::placeholder { color: rgba(255,255,255,0.45); }
+        .search-wrap input:focus {
+            border-color: rgba(125,249,255,0.6);
+            background: rgba(255,255,255,0.15);
+        }
 
-        /* ── GRID ── */
-        .container { max-width: 1100px; margin: 1.5rem auto 0; padding: 0 1.5rem 3rem; }
+        /* ── GROUP FILTER PILLS ── */
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            border: 1.5px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.75);
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+        }
+        .filter-btn.active {
+            background: rgba(125,249,255,0.25);
+            border-color: #7df9ff;
+            color: #7df9ff;
+        }
+
+        /* ── MAIN GRID ── */
+        .container {
+            max-width: 1140px;
+            margin: 2rem auto 4rem;
+            padding: 0 1.5rem;
+        }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.5rem;
         }
 
         /* ── CARD ── */
         .card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.3rem;
+            background: rgba(255,255,255,0.95);
+            border-radius: 18px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
             display: flex;
             flex-direction: column;
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
-        .card:hover {
-            box-shadow: 0 6px 24px rgba(0,0,0,0.07);
-            transform: translateY(-3px);
-        }
-
-        .card-top {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.65rem;
-        }
-        .card-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
-        .card-name {
-            font-size: 1rem; font-weight: 600;
             color: #1a1a2e;
             text-decoration: none;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .card:active { transform: translateY(-2px); }
+
+        /* Coloured top panel */
+        .card-banner {
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.2rem;
+            line-height: 1;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* "No live site" ribbon */
+        .ribbon {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 0.62rem;
+            font-weight: 600;
+            padding: 0.2rem 0.55rem;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.2);
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+        .ribbon.live {
+            background: rgba(255,255,255,0.25);
+            color: #fff;
+        }
+
+        .card-body {
+            padding: 1.1rem 1.2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.45rem;
             word-break: break-word;
         }
-        .card-name:hover { color: #4f46e5; text-decoration: underline; }
-
         .card-desc {
-            font-size: 0.855rem;
+            font-size: 0.835rem;
             color: #6b7280;
+            line-height: 1.55;
             flex-grow: 1;
             margin-bottom: 1rem;
-            line-height: 1.55;
         }
-        .card-desc.no-desc { font-style: italic; color: #c0c4cc; }
+        .card-desc.empty { font-style: italic; color: #c0c4cc; }
 
         .card-footer {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
             gap: 0.5rem;
         }
-
-        .lang-badge {
-            font-size: 0.72rem;
-            padding: 0.2rem 0.65rem;
-            border-radius: 20px;
+        .updated {
+            font-size: 0.7rem;
+            color: #9ca3af;
+        }
+        .open-btn {
+            font-size: 0.75rem;
             font-weight: 600;
-        }
-        .updated { font-size: 0.7rem; color: #c0c4cc; }
-
-        .links { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-        .link-btn {
-            font-size: 0.72rem;
-            padding: 0.3rem 0.7rem;
-            border-radius: 6px;
+            padding: 0.38rem 0.85rem;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 500;
             transition: opacity 0.15s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
-        .link-btn:hover { opacity: 0.8; }
-        .link-github { background: #1a1a2e; color: white; }
-        .link-live   { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+        .open-btn:hover { opacity: 0.8; }
+        .btn-live  { background: #0ea5e9; color: #fff; }
+        .btn-github { background: #1f2937; color: #fff; }
 
-        /* ── LOADING / ERROR ── */
-        .loading-state {
+        /* ── GROUP SECTION LABEL ── */
+        .group-label {
+            grid-column: 1 / -1;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            margin-top: 0.5rem;
+        }
+
+        /* ── EMPTY / LOADING ── */
+        .state-box {
             text-align: center;
             padding: 4rem 1rem;
-            color: #9ca3af;
+            color: rgba(255,255,255,0.6);
+            grid-column: 1/-1;
         }
         .spinner {
             display: inline-block;
-            width: 36px; height: 36px;
-            border: 3px solid #e5e7eb;
-            border-top-color: #6366f1;
+            width: 38px; height: 38px;
+            border: 3px solid rgba(255,255,255,0.15);
+            border-top-color: #7df9ff;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 0.75rem;
+            animation: spin 0.75s linear infinite;
+            margin-bottom: 1rem;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .error-state { text-align: center; padding: 3rem; color: #ef4444; }
-
-        .no-results { text-align: center; padding: 3rem; color: #9ca3af; font-size: 0.9rem; }
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            display: none;
+        }
 
         /* ── FOOTER ── */
         footer {
             text-align: center;
             padding: 1.5rem;
-            font-size: 0.78rem;
-            color: #c0c4cc;
-            border-top: 1px solid #f0f0f0;
+            font-size: 0.77rem;
+            color: rgba(255,255,255,0.35);
         }
-        footer a { color: #c0c4cc; }
+        footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+        footer a:hover { color: rgba(255,255,255,0.7); }
 
-        /* ── RESPONSIVE ── */
         @media (max-width: 480px) {
-            .grid { grid-template-columns: 1fr; }
-            .stats-bar { gap: 0.6rem; }
-            .stat { padding: 0.6rem 1rem; }
+            .grid { grid-template-columns: 1fr; gap: 1rem; }
+            .hero-title { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- HEADER: filled by JS -->
-<div class="header" id="profile-header">
-    <div class="loading-state">
-        <div class="spinner"></div><br>Loading profile…
-    </div>
+<!-- HERO -->
+<div class="hero">
+    <h1 class="hero-title">Things I've <span>Built</span> 🚀</h1>
+    <p class="hero-sub">Live from GitHub · Updates automatically</p>
+    <div class="stats-row" id="stats"></div>
 </div>
 
-<!-- STATS BAR -->
-<div class="stats-bar" id="stats"></div>
-
-<!-- SEARCH -->
-<div class="search-bar">
-    <input id="search" type="text" placeholder="🔍  Search projects…" oninput="filterCards()" />
+<!-- CONTROLS -->
+<div class="controls">
+    <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="search" type="text" placeholder="Search projects…" oninput="applyFilters()" />
+    </div>
+    <div class="filters" id="filters">
+        <button class="filter-btn active" data-group="all" onclick="setGroup('all', this)">All</button>
+        <button class="filter-btn" data-group="nosh7"    onclick="setGroup('nosh7', this)">🍱 Nosh7</button>
+        <button class="filter-btn" data-group="websites" onclick="setGroup('websites', this)">🌐 Websites</button>
+        <button class="filter-btn" data-group="tools"    onclick="setGroup('tools', this)">🔧 Tools</button>
+    </div>
 </div>
 
 <!-- MAIN GRID -->
 <div class="container">
     <div id="repos-grid" class="grid">
-        <div class="loading-state" style="grid-column:1/-1">
+        <div class="state-box">
             <div class="spinner"></div><br>Loading your projects…
         </div>
     </div>
-    <div id="no-results" class="no-results" style="display:none">No projects match your search.</div>
+    <div id="no-results" class="no-results">No projects match your search.</div>
 </div>
 
 <footer>
-    ✨ Live from GitHub · Updates automatically on every visit ·
+    ✦ Auto-updated live from GitHub ·
     <a href="https://github.com/hii2023" target="_blank">github.com/hii2023</a>
 </footer>
 
 <script>
-/* ─────────────────────────────────────────────
-   CONFIG
-───────────────────────────────────────────── */
+/* ─── CONFIG ─────────────────────────────── */
 const USERNAME = 'hii2023';
 
-/* Language → badge colours */
-const LANG_COLORS = {
-    HTML:       { bg: '#fff7ed', color: '#c2410c' },
-    CSS:        { bg: '#fdf4ff', color: '#9333ea' },
-    JavaScript: { bg: '#fefce8', color: '#ca8a04' },
-    TypeScript: { bg: '#eff6ff', color: '#2563eb' },
-    Python:     { bg: '#f0fdf4', color: '#16a34a' },
-    default:    { bg: '#f3f4f6', color: '#6b7280' }
-};
-
-/* Keyword → emoji icon */
-const ICON_MAP = [
-    ['whatsapp',  '💬'],
-    ['crm',       '📊'],
-    ['nosh7',     '🍱'],
-    ['food',      '🍽️'],
-    ['landing',   '🌐'],
-    ['outreach',  '📣'],
-    ['growth',    '📈'],
-    ['lead',      '🎯'],
-    ['invitation','💌'],
-    ['invite',    '💌'],
-    ['business',  '💼'],
-    ['item',      '📦'],
-    ['test',      '🧪'],
-    ['tool',      '🔧'],
-    ['sapna',     '✨'],
-    ['in',        '🌍'],
+/* Banner colours cycling through ocean palette */
+const BANNER_COLORS = [
+    'linear-gradient(135deg,#0077b6,#00b4d8)',
+    'linear-gradient(135deg,#023e8a,#0096c7)',
+    'linear-gradient(135deg,#0089a7,#48cae4)',
+    'linear-gradient(135deg,#005f73,#0a9396)',
+    'linear-gradient(135deg,#03045e,#0077b6)',
+    'linear-gradient(135deg,#0582ca,#06d6a0)',
+    'linear-gradient(135deg,#00b4d8,#90e0ef)',
+    'linear-gradient(135deg,#1d3557,#457b9d)',
 ];
 
+/* Emoji icon mapping */
+const ICON_MAP = [
+    ['whatsapp','💬'], ['crm','📊'], ['nosh7','🍱'], ['food','🍽️'],
+    ['landing','🌐'], ['outreach','📣'], ['growth','📈'], ['lead','🎯'],
+    ['invitation','💌'], ['invite','💌'], ['business','💼'],
+    ['item','📦'], ['test','🧪'], ['tool','🔧'], ['sapna','✨'],
+];
 function getIcon(name) {
-    const lower = name.toLowerCase();
-    for (const [key, icon] of ICON_MAP) {
-        if (lower.includes(key)) return icon;
-    }
+    const l = name.toLowerCase();
+    for (const [k, i] of ICON_MAP) if (l.includes(k)) return i;
     return '📁';
+}
+
+/* Group classification */
+const GROUPS = {
+    nosh7:    n => n.toLowerCase().includes('nosh7') || n.toLowerCase().includes('nosh'),
+    tools:    n => ['sapna','test-writing-tool','growth-hub'].includes(n.toLowerCase()),
+    websites: n => ['item','businessfirst','leaqualify','invitation','landing-page-nosh7'].includes(n.toLowerCase()),
+};
+function getGroup(name) {
+    for (const [g, fn] of Object.entries(GROUPS)) if (fn(name)) return g;
+    return 'other';
 }
 
 /* Smart descriptions when GitHub has none */
 const SMART_DESCS = {
-    'nosh7-whatsapp-crm':  'WhatsApp CRM system built for Nosh7 subscription management',
+    'nosh7-whatsapp-crm':  'WhatsApp CRM system for Nosh7 subscription management',
     'nosh7-crm':           'Customer relationship management dashboard for Nosh7',
     'nosh7-outreach':      'Outreach and marketing automation for Nosh7',
     'landing-page-nosh7':  'Landing page for Nosh7 — built with TypeScript',
@@ -282,37 +383,31 @@ const SMART_DESCS = {
     'Test-Writing-Tool':   'Writing and test generation tool',
     'SAPNA':               'SAPNA — JavaScript-powered project',
 };
-
 function getDesc(repo) {
     if (repo.description) return { text: repo.description, empty: false };
-    const smart = SMART_DESCS[repo.name];
-    if (smart) return { text: smart, empty: false };
-    return { text: 'No description — add one on GitHub!', empty: true };
+    const s = SMART_DESCS[repo.name];
+    if (s) return { text: s, empty: false };
+    return { text: 'No description yet — add one on GitHub!', empty: true };
 }
 
-function timeAgo(dateStr) {
-    const diff = Math.floor((Date.now() - new Date(dateStr)) / 1000);
-    if (diff < 60)       return 'just now';
-    if (diff < 3600)     return `${Math.floor(diff / 60)}m ago`;
-    if (diff < 86400)    return `${Math.floor(diff / 3600)}h ago`;
-    if (diff < 2592000)  return `${Math.floor(diff / 86400)}d ago`;
-    return new Date(dateStr).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
+function timeAgo(d) {
+    const s = Math.floor((Date.now() - new Date(d)) / 1000);
+    if (s < 60)      return 'just now';
+    if (s < 3600)    return `${Math.floor(s/60)}m ago`;
+    if (s < 86400)   return `${Math.floor(s/3600)}h ago`;
+    if (s < 2592000) return `${Math.floor(s/86400)}d ago`;
+    return new Date(d).toLocaleDateString('en-IN',{month:'short',year:'numeric'});
 }
 
-/* ─────────────────────────────────────────────
-   DATA FETCHING
-───────────────────────────────────────────── */
-async function fetchProfile() {
-    const r = await fetch(`https://api.github.com/users/${USERNAME}`);
-    return r.json();
-}
+/* ─── STATE ─────────────────────────────── */
+let ALL_REPOS  = [];
+let activeGroup = 'all';
 
-async function fetchAllRepos() {
+/* ─── FETCH ─────────────────────────────── */
+async function fetchRepos() {
     let page = 1, all = [];
     while (true) {
-        const r = await fetch(
-            `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated&page=${page}`
-        );
+        const r = await fetch(`https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated&page=${page}`);
         const repos = await r.json();
         if (!Array.isArray(repos) || !repos.length) break;
         all = all.concat(repos);
@@ -322,102 +417,132 @@ async function fetchAllRepos() {
     return all;
 }
 
-/* ─────────────────────────────────────────────
-   RENDER
-───────────────────────────────────────────── */
-let ALL_REPOS = [];
+/* ─── RENDER ─────────────────────────────── */
+function buildCard(repo, colorIdx) {
+    const desc   = getDesc(repo);
+    const icon   = getIcon(repo.name);
+    const url    = repo.homepage || repo.html_url;        // primary URL = live site if available
+    const isLive = !!repo.homepage;
+    const banner = BANNER_COLORS[colorIdx % BANNER_COLORS.length];
+    const btnClass = isLive ? 'btn-live' : 'btn-github';
+    const btnLabel = isLive ? '🔗 Open Site' : 'GitHub →';
 
-function renderCard(repo) {
-    const desc    = getDesc(repo);
-    const lang    = LANG_COLORS[repo.language] || LANG_COLORS.default;
-    const icon    = getIcon(repo.name);
-    const live    = repo.homepage
-        ? `<a class="link-btn link-live" href="${repo.homepage}" target="_blank">🔗 Live</a>`
-        : '';
     return `
-        <div class="card" data-name="${repo.name.toLowerCase()} ${(repo.description||'').toLowerCase()}">
-            <div class="card-top">
-                <span class="card-icon">${icon}</span>
-                <a class="card-name" href="${repo.html_url}" target="_blank">${repo.name}</a>
+        <div class="card"
+             data-group="${getGroup(repo.name)}"
+             data-search="${repo.name.toLowerCase()} ${(repo.description||'').toLowerCase()}"
+             onclick="window.open('${url}','_blank')">
+
+            <div class="card-banner" style="background:${banner}">
+                ${icon}
+                <span class="ribbon ${isLive ? 'live' : ''}">${isLive ? '● Live' : 'GitHub'}</span>
             </div>
-            <p class="card-desc ${desc.empty ? 'no-desc' : ''}">${desc.text}</p>
-            <div class="card-footer">
-                <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
-                    ${repo.language
-                        ? `<span class="lang-badge" style="background:${lang.bg};color:${lang.color}">${repo.language}</span>`
-                        : ''}
+
+            <div class="card-body">
+                <div class="card-name">${repo.name}</div>
+                <p class="card-desc ${desc.empty ? 'empty' : ''}">${desc.text}</p>
+                <div class="card-footer">
                     <span class="updated">Updated ${timeAgo(repo.updated_at)}</span>
-                </div>
-                <div class="links">
-                    ${live}
-                    <a class="link-btn link-github" href="${repo.html_url}" target="_blank">GitHub →</a>
+                    <a class="open-btn ${btnClass}"
+                       href="${url}"
+                       target="_blank"
+                       onclick="event.stopPropagation()">${btnLabel}</a>
                 </div>
             </div>
         </div>`;
 }
 
-function filterCards() {
+/* ─── FILTER ─────────────────────────────── */
+function applyFilters() {
     const q = document.getElementById('search').value.toLowerCase().trim();
     const cards = document.querySelectorAll('.card');
+    const labels = document.querySelectorAll('.group-label');
     let visible = 0;
+
+    labels.forEach(l => l.remove()); // remove old labels before re-inserting
+
     cards.forEach(c => {
-        const match = !q || c.dataset.name.includes(q);
-        c.style.display = match ? '' : 'none';
-        if (match) visible++;
+        const groupMatch = activeGroup === 'all' || c.dataset.group === activeGroup;
+        const searchMatch = !q || c.dataset.search.includes(q);
+        const show = groupMatch && searchMatch;
+        c.style.display = show ? '' : 'none';
+        if (show) visible++;
     });
+
+    // Re-insert group labels when viewing "all"
+    if (activeGroup === 'all' && !q) insertGroupLabels();
+
     document.getElementById('no-results').style.display = visible ? 'none' : 'block';
 }
 
-/* ─────────────────────────────────────────────
-   MAIN
-───────────────────────────────────────────── */
+function setGroup(group, btn) {
+    activeGroup = group;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+}
+
+const GROUP_ORDER = ['nosh7','websites','tools','other'];
+const GROUP_LABELS = {
+    nosh7:    '🍱  Nosh7 Projects',
+    websites: '🌐  Websites',
+    tools:    '🔧  Tools & Apps',
+    other:    '📁  Other',
+};
+
+function insertGroupLabels() {
+    const grid = document.getElementById('repos-grid');
+    const cards = [...grid.querySelectorAll('.card:not([style*="none"])')];
+    if (!cards.length) return;
+
+    let lastGroup = null;
+    cards.forEach(card => {
+        const g = card.dataset.group;
+        if (g !== lastGroup) {
+            const label = document.createElement('div');
+            label.className = 'group-label';
+            label.textContent = GROUP_LABELS[g] || '📁  Other';
+            grid.insertBefore(label, card);
+            lastGroup = g;
+        }
+    });
+}
+
+/* ─── MAIN ─────────────────────────────── */
 async function init() {
     try {
-        // Load profile + repos in parallel
-        const [profile, repos] = await Promise.all([fetchProfile(), fetchAllRepos()]);
+        const repos = await fetchRepos();
         ALL_REPOS = repos;
 
-        /* --- Profile header --- */
-        document.getElementById('profile-header').innerHTML = `
-            <img class="avatar" src="${profile.avatar_url}" alt="${profile.login}">
-            <h1>${profile.name || profile.login}</h1>
-            <p class="bio">${profile.bio || 'Builder &amp; Creator'}</p>
-            <a class="github-link" href="https://github.com/${USERNAME}" target="_blank">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2.2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.7 18 5 18 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>
-                github.com/${USERNAME}
-            </a>
-        `;
-        document.title = `${profile.name || profile.login}'s Projects`;
-
-        /* --- Stats --- */
+        /* Stats */
+        const liveCount = repos.filter(r => r.homepage).length;
         const langs = [...new Set(repos.map(r => r.language).filter(Boolean))];
         document.getElementById('stats').innerHTML = `
-            <div class="stat">
-                <div class="num">${repos.length}</div>
-                <div class="label">Projects</div>
-            </div>
-            <div class="stat">
-                <div class="num">${langs.length}</div>
-                <div class="label">Languages</div>
-            </div>
-            <div class="stat">
-                <div class="num">${repos.filter(r => r.homepage).length}</div>
-                <div class="label">Live Sites</div>
-            </div>
-            <div class="stat">
-                <div class="num">${repos.filter(r => r.stargazers_count > 0).length}</div>
-                <div class="label">Starred</div>
-            </div>
+            <div class="stat-pill"><strong>${repos.length}</strong> Projects</div>
+            <div class="stat-pill"><strong>${liveCount}</strong> Live Sites</div>
+            <div class="stat-pill"><strong>${langs.length}</strong> Languages</div>
         `;
 
-        /* --- Cards --- */
-        document.getElementById('repos-grid').innerHTML = repos.map(renderCard).join('');
+        /* Sort: nosh7 first, then websites, tools, other */
+        const sorted = [...repos].sort((a, b) => {
+            const ga = GROUP_ORDER.indexOf(getGroup(a.name));
+            const gb = GROUP_ORDER.indexOf(getGroup(b.name));
+            if (ga !== gb) return ga - gb;
+            return new Date(b.updated_at) - new Date(a.updated_at);
+        });
+
+        /* Render cards */
+        const grid = document.getElementById('repos-grid');
+        grid.innerHTML = sorted.map((r, i) => buildCard(r, i)).join('');
+
+        /* Insert group labels */
+        insertGroupLabels();
 
     } catch (err) {
-        document.getElementById('repos-grid').innerHTML =
-            `<div class="error-state" style="grid-column:1/-1">
-                ⚠️ Could not load projects. Check your internet connection and try again.<br>
-                <small style="color:#fca5a5">${err.message}</small>
+        document.getElementById('repos-grid').innerHTML = `
+            <div class="state-box">
+                ⚠️ Could not load projects. Check your internet and try again.<br>
+                <small style="opacity:.6;font-size:.8rem">${err.message}</small>
             </div>`;
     }
 }
