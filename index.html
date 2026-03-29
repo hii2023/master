@@ -6,7 +6,6 @@
     <title>My Projects</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
@@ -15,277 +14,192 @@
             color: #fff;
         }
 
-        /* HERO */
-        .hero {
-            text-align: center;
-            padding: 3.5rem 1.5rem 1.5rem;
-        }
-        .hero h1 {
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
-        }
-        .hero h1 span {
-            background: linear-gradient(90deg, #7df9ff, #a8edff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero p {
-            color: rgba(255,255,255,0.6);
-            margin-top: 0.4rem;
-            font-size: 0.9rem;
-        }
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 0.7rem;
-            flex-wrap: wrap;
-            margin-top: 1.4rem;
-        }
-        .stat-pill {
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.18);
-            border-radius: 40px;
-            padding: 0.38rem 1rem;
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.9);
-        }
-        .stat-pill strong { color: #fff; }
+        /* ── HERO ── */
+        .hero { text-align: center; padding: 3rem 1.5rem 1.5rem; }
+        .hero h1 { font-size: clamp(1.8rem,5vw,3rem); font-weight: 800; letter-spacing: -0.02em; text-shadow: 0 2px 20px rgba(0,0,0,.3); }
+        .hero h1 span { background: linear-gradient(90deg,#7df9ff,#a8edff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .hero p { color: rgba(255,255,255,.6); margin-top:.4rem; font-size:.9rem; }
+        .stats-row { display:flex; justify-content:center; gap:.6rem; flex-wrap:wrap; margin-top:1.3rem; }
+        .stat-pill { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18); border-radius:40px; padding:.35rem 1rem; font-size:.78rem; color:rgba(255,255,255,.9); }
+        .stat-pill strong { color:#fff; }
 
-        /* CONTROLS */
-        .controls {
-            max-width: 680px;
-            margin: 1.75rem auto 0;
-            padding: 0 1.5rem;
-        }
-        .search-wrap { position: relative; }
-        .search-icon {
-            position: absolute;
-            left: 0.9rem;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            font-size: 0.9rem;
-        }
+        /* ── CONTROLS ── */
+        .controls { max-width:760px; margin:1.75rem auto 0; padding:0 1.5rem; }
+        .search-row { display:flex; gap:.6rem; align-items:center; }
+        .search-wrap { position:relative; flex:1; }
+        .search-icon { position:absolute; left:.9rem; top:50%; transform:translateY(-50%); pointer-events:none; font-size:.9rem; }
         .search-wrap input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border-radius: 12px;
-            border: 1.5px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.2s, background 0.2s;
+            width:100%; padding:.72rem 1rem .72rem 2.5rem;
+            border-radius:12px; border:1.5px solid rgba(255,255,255,.2);
+            background:rgba(255,255,255,.1); color:#fff; font-size:.9rem; outline:none;
+            transition:border-color .2s,background .2s;
         }
-        .search-wrap input::placeholder { color: rgba(255,255,255,0.4); }
-        .search-wrap input:focus {
-            border-color: rgba(125,249,255,0.6);
-            background: rgba(255,255,255,0.15);
+        .search-wrap input::placeholder { color:rgba(255,255,255,.4); }
+        .search-wrap input:focus { border-color:rgba(125,249,255,.6); background:rgba(255,255,255,.15); }
+
+        /* Add button */
+        .add-btn {
+            display:inline-flex; align-items:center; gap:.4rem;
+            padding:.65rem 1.1rem; border-radius:12px; border:none; cursor:pointer;
+            background:rgba(125,249,255,.22); border:1.5px solid #7df9ff;
+            color:#7df9ff; font-size:.85rem; font-weight:600;
+            transition:all .18s; white-space:nowrap; flex-shrink:0;
         }
-        .filters {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 0.9rem;
-            justify-content: center;
-        }
+        .add-btn:hover { background:rgba(125,249,255,.35); }
+
+        .filters { display:flex; gap:.45rem; flex-wrap:wrap; margin-top:.9rem; justify-content:center; }
         .filter-btn {
-            padding: 0.38rem 1rem;
-            border-radius: 30px;
-            border: 1.5px solid rgba(255,255,255,0.22);
-            background: rgba(255,255,255,0.07);
-            color: rgba(255,255,255,0.7);
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.18s;
+            padding:.35rem .95rem; border-radius:30px;
+            border:1.5px solid rgba(255,255,255,.22); background:rgba(255,255,255,.07);
+            color:rgba(255,255,255,.7); font-size:.78rem; font-weight:500; cursor:pointer; transition:all .18s;
         }
-        .filter-btn:hover  { background: rgba(255,255,255,0.16); color: #fff; }
-        .filter-btn.active { background: rgba(125,249,255,0.22); border-color: #7df9ff; color: #7df9ff; }
+        .filter-btn:hover  { background:rgba(255,255,255,.16); color:#fff; }
+        .filter-btn.active { background:rgba(125,249,255,.22); border-color:#7df9ff; color:#7df9ff; }
 
-        /* GRID */
-        .container { max-width: 1160px; margin: 2rem auto 4rem; padding: 0 1.5rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.4rem; }
+        /* ── GRID ── */
+        .container { max-width:1180px; margin:2rem auto 4rem; padding:0 1.5rem; }
+        .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:1.4rem; }
 
-        /* GROUP DIVIDER */
+        /* Group divider */
         .group-divider {
-            grid-column: 1 / -1;
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.45);
-            padding-bottom: 0.35rem;
-            border-bottom: 1px solid rgba(255,255,255,0.12);
-            margin-top: 0.5rem;
+            grid-column:1/-1; font-size:.67rem; font-weight:700; letter-spacing:.1em;
+            text-transform:uppercase; color:rgba(255,255,255,.45);
+            padding-bottom:.3rem; border-bottom:1px solid rgba(255,255,255,.12); margin-top:.6rem;
         }
 
-        /* CARD */
+        /* ── CARD ── */
         .card {
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
-            text-decoration: none;
-            color: inherit;
+            background:#fff; border-radius:16px; overflow:hidden;
+            display:flex; flex-direction:column; cursor:pointer; position:relative;
+            transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s;
         }
-        .card:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 18px 48px rgba(0,0,0,0.28);
-        }
-        .card:active { transform: translateY(-2px); }
+        .card:hover { transform:translateY(-5px) scale(1.01); box-shadow:0 18px 48px rgba(0,0,0,.28); }
+        .card:active { transform:translateY(-2px); }
 
-        /* Card banner */
+        /* Delete button (custom links only) */
+        .card-delete {
+            position:absolute; top:8px; left:8px; z-index:10;
+            width:22px; height:22px; border-radius:50%; border:none; cursor:pointer;
+            background:rgba(0,0,0,.35); color:#fff; font-size:.7rem;
+            display:none; align-items:center; justify-content:center;
+            transition:background .15s;
+        }
+        .card:hover .card-delete { display:flex; }
+        .card-delete:hover { background:rgba(220,38,38,.8); }
+
+        /* Banner */
         .banner {
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.8rem;
-            line-height: 1;
-            position: relative;
-            flex-shrink: 0;
+            height:100px; display:flex; align-items:center; justify-content:center;
+            font-size:2.8rem; line-height:1; position:relative; flex-shrink:0;
+            background-size:cover; background-position:center;
         }
+        .banner-emoji { text-shadow:0 2px 8px rgba(0,0,0,.3); }
         .banner-badge {
-            position: absolute;
-            top: 9px; right: 10px;
-            font-size: 0.58rem;
-            font-weight: 700;
-            padding: 0.15rem 0.5rem;
-            border-radius: 20px;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
+            position:absolute; top:9px; right:10px; font-size:.58rem; font-weight:700;
+            padding:.15rem .5rem; border-radius:20px; letter-spacing:.05em; text-transform:uppercase;
         }
-        .badge-live   { background: rgba(255,255,255,0.3); color: #fff; }
-        .badge-github { background: rgba(0,0,0,0.22); color: rgba(255,255,255,0.85); }
+        .badge-live   { background:rgba(255,255,255,.3); color:#fff; }
+        .badge-github { background:rgba(0,0,0,.22); color:rgba(255,255,255,.85); }
+        .badge-source { background:rgba(125,249,255,.35); color:#fff; }
 
         /* Card body */
-        .card-body {
-            padding: 1rem 1.1rem 1.1rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-        .card-title {
-            font-size: 0.97rem;
-            font-weight: 700;
-            color: #111827;
-            margin-bottom: 0.2rem;
-            word-break: break-word;
-        }
-        .card-url {
-            font-size: 0.67rem;
-            color: #60a5fa;
-            margin-bottom: 0.55rem;
-            word-break: break-all;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-        }
-        .card-desc {
-            font-size: 0.83rem;
-            color: #6b7280;
-            line-height: 1.55;
-            flex-grow: 1;
-            margin-bottom: 0.85rem;
-        }
-        .card-desc.empty { font-style: italic; color: #d1d5db; }
+        .card-body { padding:1rem 1.1rem 1.1rem; display:flex; flex-direction:column; flex-grow:1; }
+        .card-title { font-size:.97rem; font-weight:700; color:#111827; margin-bottom:.18rem; word-break:break-word; }
+        .card-url   { font-size:.66rem; color:#60a5fa; margin-bottom:.5rem; word-break:break-all; font-family:'SF Mono','Fira Code',monospace; }
+        .card-desc  { font-size:.82rem; color:#6b7280; line-height:1.55; flex-grow:1; margin-bottom:.8rem; }
+        .card-desc.empty { font-style:italic; color:#d1d5db; }
 
         /* Sub-pages */
-        .sub-section { margin-bottom: 0.85rem; }
-        .sub-label {
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.09em;
-            text-transform: uppercase;
-            color: #9ca3af;
-            margin-bottom: 0.4rem;
-        }
-        .sub-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-
+        .sub-section { margin-bottom:.8rem; }
+        .sub-label { font-size:.6rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:#9ca3af; margin-bottom:.38rem; }
+        .sub-chips { display:flex; flex-wrap:wrap; gap:.28rem; }
         .chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.2rem;
-            font-size: 0.7rem;
-            font-weight: 500;
-            padding: 0.25rem 0.6rem;
-            border-radius: 20px;
-            text-decoration: none;
-            transition: all 0.15s;
-            border: 1px solid transparent;
+            display:inline-flex; align-items:center; gap:.18rem; font-size:.68rem; font-weight:500;
+            padding:.22rem .55rem; border-radius:20px; text-decoration:none;
+            transition:all .15s; border:1px solid transparent;
         }
-        .chip-page   { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
-        .chip-anchor { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
-        .chip-tab    { background: #f3f4f6; color: #9ca3af; border-color: #e5e7eb; cursor: default; }
-        .chip-page:hover   { background: #dbeafe; border-color: #93c5fd; }
-        .chip-anchor:hover { background: #dcfce7; border-color: #86efac; }
+        .chip-page   { background:#eff6ff; color:#2563eb; border-color:#bfdbfe; }
+        .chip-anchor { background:#f0fdf4; color:#16a34a; border-color:#bbf7d0; }
+        .chip-tab    { background:#f3f4f6; color:#9ca3af; border-color:#e5e7eb; cursor:default; }
+        .chip-admin  { background:#fef2f2; color:#dc2626; border-color:#fecaca; }
+        .chip-page:hover   { background:#dbeafe; border-color:#93c5fd; }
+        .chip-anchor:hover { background:#dcfce7; border-color:#86efac; }
+        .chip-admin:hover  { background:#fee2e2; border-color:#fca5a5; }
 
         /* Card footer */
-        .card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.5rem;
-            padding-top: 0.65rem;
-            border-top: 1px solid #f3f4f6;
-            margin-top: auto;
-        }
-        .card-updated { font-size: 0.67rem; color: #d1d5db; }
-        .open-btn {
-            font-size: 0.72rem;
-            font-weight: 600;
-            padding: 0.35rem 0.85rem;
-            border-radius: 8px;
-            text-decoration: none;
-            white-space: nowrap;
-            flex-shrink: 0;
-            transition: opacity 0.15s;
-        }
-        .open-btn:hover { opacity: 0.82; }
-        .btn-live   { background: #0077b6; color: #fff; }
-        .btn-github { background: #1f2937; color: #fff; }
+        .card-footer { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding-top:.6rem; border-top:1px solid #f3f4f6; margin-top:auto; }
+        .card-updated { font-size:.66rem; color:#d1d5db; }
+        .open-btn { font-size:.71rem; font-weight:600; padding:.33rem .8rem; border-radius:8px; text-decoration:none; white-space:nowrap; flex-shrink:0; transition:opacity .15s; }
+        .open-btn:hover { opacity:.82; }
+        .btn-live   { background:#0077b6; color:#fff; }
+        .btn-github { background:#1f2937; color:#fff; }
+        .btn-source { background:linear-gradient(135deg,#7c3aed,#4f46e5); color:#fff; }
 
-        /* Loading / error */
-        .state-msg {
-            grid-column: 1/-1;
-            text-align: center;
-            padding: 4rem 1rem;
-            color: rgba(255,255,255,0.5);
+        /* ── MODAL ── */
+        .modal-overlay {
+            display:none; position:fixed; inset:0; z-index:1000;
+            background:rgba(0,0,0,.6); backdrop-filter:blur(6px);
+            align-items:center; justify-content:center; padding:1rem;
         }
-        .spinner {
-            display: inline-block;
-            width: 34px; height: 34px;
-            border: 3px solid rgba(255,255,255,0.15);
-            border-top-color: #7df9ff;
-            border-radius: 50%;
-            animation: spin 0.75s linear infinite;
-            margin-bottom: 0.75rem;
+        .modal-overlay.open { display:flex; }
+        .modal {
+            background:#fff; border-radius:20px; width:100%; max-width:560px;
+            max-height:90vh; overflow-y:auto; color:#1a1a2e;
+            box-shadow:0 24px 80px rgba(0,0,0,.4);
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .modal-header {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:1.25rem 1.5rem 1rem; border-bottom:1px solid #f3f4f6;
+        }
+        .modal-header h2 { font-size:1.1rem; font-weight:700; }
+        .modal-close { background:none; border:none; font-size:1.4rem; cursor:pointer; color:#9ca3af; line-height:1; }
+        .modal-close:hover { color:#1a1a2e; }
+        .modal-body { padding:1.25rem 1.5rem; }
 
-        .no-results {
-            grid-column: 1/-1;
-            text-align: center;
-            padding: 3rem;
-            color: rgba(255,255,255,0.4);
-            font-size: 0.9rem;
+        .field { margin-bottom:1.1rem; }
+        .field label { display:block; font-size:.78rem; font-weight:600; color:#374151; margin-bottom:.4rem; }
+        .field label span { color:#9ca3af; font-weight:400; }
+        .field input, .field textarea, .field select {
+            width:100%; padding:.65rem .9rem; border:1.5px solid #e5e7eb; border-radius:10px;
+            font-size:.88rem; color:#1a1a2e; outline:none; font-family:inherit;
+            transition:border-color .2s;
         }
+        .field input:focus, .field textarea:focus { border-color:#60a5fa; }
+        .field textarea { resize:vertical; min-height:70px; }
 
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.28);
+        /* Sub-pages in form */
+        .subpage-rows { display:flex; flex-direction:column; gap:.5rem; margin-bottom:.5rem; }
+        .subpage-row { display:flex; gap:.4rem; align-items:center; }
+        .subpage-row input { flex:1; padding:.5rem .7rem; border:1.5px solid #e5e7eb; border-radius:8px; font-size:.82rem; outline:none; transition:border-color .2s; }
+        .subpage-row input:focus { border-color:#60a5fa; }
+        .subpage-row .rm-btn { background:none; border:none; color:#d1d5db; font-size:1rem; cursor:pointer; flex-shrink:0; }
+        .subpage-row .rm-btn:hover { color:#ef4444; }
+        .add-subpage-btn {
+            display:inline-flex; align-items:center; gap:.3rem;
+            font-size:.78rem; color:#2563eb; background:none; border:none; cursor:pointer; padding:.2rem 0; font-weight:500;
         }
-        footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
-        footer a:hover { color: rgba(255,255,255,0.65); }
+        .add-subpage-btn:hover { color:#1d4ed8; }
 
-        @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
+        /* Image preview */
+        .img-preview { margin-top:.5rem; border-radius:8px; height:60px; background-size:cover; background-position:center; display:none; border:1px solid #e5e7eb; }
+
+        .modal-footer { display:flex; gap:.75rem; justify-content:flex-end; padding:1rem 1.5rem 1.25rem; border-top:1px solid #f3f4f6; }
+        .btn-cancel { padding:.6rem 1.2rem; border-radius:10px; border:1.5px solid #e5e7eb; background:#fff; color:#6b7280; font-size:.88rem; cursor:pointer; font-weight:500; }
+        .btn-cancel:hover { background:#f9fafb; }
+        .btn-save { padding:.6rem 1.4rem; border-radius:10px; border:none; background:#0077b6; color:#fff; font-size:.88rem; cursor:pointer; font-weight:600; }
+        .btn-save:hover { background:#005f92; }
+
+        /* States */
+        .state-msg { grid-column:1/-1; text-align:center; padding:4rem 1rem; color:rgba(255,255,255,.5); }
+        .spinner { display:inline-block; width:34px; height:34px; border:3px solid rgba(255,255,255,.15); border-top-color:#7df9ff; border-radius:50%; animation:spin .75s linear infinite; margin-bottom:.75rem; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .no-results { grid-column:1/-1; text-align:center; padding:3rem; color:rgba(255,255,255,.4); font-size:.9rem; }
+
+        footer { text-align:center; padding:1.5rem; font-size:.75rem; color:rgba(255,255,255,.28); }
+        footer a { color:rgba(255,255,255,.35); text-decoration:none; }
+        footer a:hover { color:rgba(255,255,255,.65); }
+
+        @media (max-width:520px) { .grid { grid-template-columns:1fr; } .search-row { flex-wrap:wrap; } }
     </style>
 </head>
 <body>
@@ -293,159 +207,207 @@
 <div class="hero">
     <h1>Things I've <span>Built</span> 🚀</h1>
     <p>Live from GitHub &nbsp;·&nbsp; Updates automatically on every visit</p>
-    <div class="stats-row" id="stats-row">
-        <div class="stat-pill">Loading…</div>
-    </div>
+    <div class="stats-row" id="stats-row"><div class="stat-pill">Loading…</div></div>
 </div>
 
 <div class="controls">
-    <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input id="search-input" type="text" placeholder="Search projects…" />
+    <div class="search-row">
+        <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input id="search-input" type="text" placeholder="Search projects…" />
+        </div>
+        <button class="add-btn" onclick="openModal()">＋ Add Link</button>
     </div>
     <div class="filters" id="filter-bar">
         <button class="filter-btn active" data-group="all">All</button>
         <button class="filter-btn" data-group="nosh7">🍱 Nosh7</button>
         <button class="filter-btn" data-group="websites">🌐 Websites</button>
         <button class="filter-btn" data-group="tools">🔧 Tools</button>
+        <button class="filter-btn" data-group="sources">🔗 Other Sources</button>
     </div>
 </div>
 
 <div class="container">
     <div class="grid" id="main-grid">
-        <div class="state-msg">
-            <div class="spinner"></div>
-            <div>Fetching your projects from GitHub…</div>
+        <div class="state-msg"><div class="spinner"></div><div>Fetching your projects…</div></div>
+    </div>
+</div>
+
+<footer>✦ Auto-updated live from GitHub &nbsp;·&nbsp; <a href="https://github.com/hii2023" target="_blank">github.com/hii2023</a></footer>
+
+<!-- ── ADD LINK MODAL ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>➕ Add a Link / Page</h2>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="field">
+                <label>① Page / Site Name <span>(required)</span></label>
+                <input id="f-name" type="text" placeholder="e.g. Canva Dashboard, Notion Workspace" />
+            </div>
+            <div class="field">
+                <label>② URL <span>(required)</span></label>
+                <input id="f-url" type="url" placeholder="https://…" />
+            </div>
+            <div class="field">
+                <label>③ Banner Image URL <span>(optional — shown at top of card)</span></label>
+                <input id="f-image" type="url" placeholder="https://…/image.jpg" oninput="previewImg(this.value)" />
+                <div id="img-preview" class="img-preview"></div>
+            </div>
+            <div class="field">
+                <label>④ Description <span>(optional)</span></label>
+                <textarea id="f-desc" placeholder="What is this page / tool for?"></textarea>
+            </div>
+            <div class="field">
+                <label>⑤ Sub-pages / Other Links <span>(optional — add as many as you want)</span></label>
+                <div class="subpage-rows" id="subpage-rows"></div>
+                <button class="add-subpage-btn" onclick="addSubpageRow()">＋ Add sub-page</button>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn-save" onclick="saveLink()">Save Link</button>
         </div>
     </div>
 </div>
 
-<footer>
-    ✦ Auto-updated live from GitHub &nbsp;·&nbsp;
-    <a href="https://github.com/hii2023" target="_blank">github.com/hii2023</a>
-</footer>
-
 <script>
-/* ═══════════════════════════════════════════════
-   SITE DATA  — live URLs + sub-pages per repo
-   New repos from the API show up automatically;
-   add their sub-page data here when ready.
-═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   SITE DATA — all repos with their live URLs + every page
+   found by scanning each repo's file tree on GitHub.
+═══════════════════════════════════════════════════════════ */
 const SITE = {
     'item': {
-        url:   'https://hii2023.github.io/item',
-        title: 'NOSH7 Juice Launch Tracker',
-        pages: [
-            { label: 'Menu & Pricing',       href: null, kind: 'tab' },
-            { label: 'Launch Checklist',     href: null, kind: 'tab' },
-            { label: 'Competitors Insights', href: null, kind: 'tab' },
+        url:'https://hii2023.github.io/item', title:'NOSH7 Juice Launch Tracker',
+        pages:[
+            {label:'Menu & Pricing',       href:null, kind:'tab'},
+            {label:'Launch Checklist',     href:null, kind:'tab'},
+            {label:'Competitors Insights', href:null, kind:'tab'},
         ]
     },
     'BusinessFirst': {
-        url:   'https://hii2023.github.io/BusinessFirst',
-        title: 'Business First — Digital Business',
-        pages: [
-            { label: 'Services',     href: 'https://hii2023.github.io/BusinessFirst#services',     kind: 'anchor' },
-            { label: 'Pricing',      href: 'https://hii2023.github.io/BusinessFirst#pricing',      kind: 'anchor' },
-            { label: 'Testimonials', href: 'https://hii2023.github.io/BusinessFirst#testimonials', kind: 'anchor' },
-            { label: 'Contact',      href: 'https://hii2023.github.io/BusinessFirst#contact',      kind: 'anchor' },
+        url:'https://hii2023.github.io/BusinessFirst', title:'Business First — Digital Business',
+        pages:[
+            {label:'Services',      href:'https://hii2023.github.io/BusinessFirst#services',     kind:'anchor'},
+            {label:'Pricing',       href:'https://hii2023.github.io/BusinessFirst#pricing',      kind:'anchor'},
+            {label:'Testimonials',  href:'https://hii2023.github.io/BusinessFirst#testimonials', kind:'anchor'},
+            {label:'Contact',       href:'https://hii2023.github.io/BusinessFirst#contact',      kind:'anchor'},
+            {label:'📦 Kit Page',   href:'https://hii2023.github.io/BusinessFirst/kit.html',     kind:'page'},
+            {label:'🔒 Admin',      href:'https://hii2023.github.io/BusinessFirst/admin.html',   kind:'admin'},
         ]
     },
     'leaqualify': {
-        url:   'https://hii2023.github.io/leaqualify',
-        title: 'NOSH7 Lead Qualifier Tool',
-        pages: [
-            { label: '🎯 Qualify',   href: null, kind: 'tab' },
-            { label: '💬 DM Script', href: null, kind: 'tab' },
-            { label: '🚩 Red Flags', href: null, kind: 'tab' },
+        url:'https://hii2023.github.io/leaqualify', title:'NOSH7 Lead Qualifier Tool',
+        pages:[
+            {label:'🎯 Qualify',   href:null, kind:'tab'},
+            {label:'💬 DM Script', href:null, kind:'tab'},
+            {label:'🚩 Red Flags', href:null, kind:'tab'},
+            {label:'Target Page',  href:'https://hii2023.github.io/leaqualify/target.html', kind:'page'},
         ]
     },
     'nosh7-outreach': {
-        url:   'https://hii2023.github.io/nosh7-outreach/',
-        title: 'NOSH7 Member Outreach Manager',
-        pages: []
+        url:'https://hii2023.github.io/nosh7-outreach/', title:'NOSH7 Member Outreach Manager',
+        pages:[]
     },
     'SAPNA': {
-        url:   'https://hii2023.github.io/SAPNA',
-        title: "Sapna's Art Studio",
-        pages: []
+        url:'https://hii2023.github.io/SAPNA', title:"Sapna's Art Studio",
+        pages:[]
     },
     'growth-hub': {
-        url:   'https://hii2023.github.io/growth-hub',
-        title: 'The Growth Hub — Master Learning Center',
-        pages: [
-            { label: '🤝 Negotiation Lab', href: 'https://hii2023.github.io/growth-hub/negotiations/index.html', kind: 'page' },
-            { label: '💰 Sales Vault',     href: 'https://hii2023.github.io/growth-hub/sales/index.html',       kind: 'page' },
-            { label: '☮️ Harmony Center',  href: 'https://hii2023.github.io/growth-hub/conflict/index.html',    kind: 'page' },
-            { label: '🧠 Mind Reader',     href: 'https://hii2023.github.io/growth-hub/psychology/index.html',  kind: 'page' },
-            { label: '🤖 AI & Future Biz', href: 'https://hii2023.github.io/growth-hub/ai-trends/index.html',  kind: 'page' },
+        url:'https://hii2023.github.io/growth-hub', title:'The Growth Hub — Master Learning Center',
+        pages:[
+            {label:'🤝 Negotiation Lab', href:'https://hii2023.github.io/growth-hub/negotiations/index.html', kind:'page'},
+            {label:'💰 Sales Vault',     href:'https://hii2023.github.io/growth-hub/sales/index.html',        kind:'page'},
+            {label:'☮️ Harmony Center',  href:'https://hii2023.github.io/growth-hub/conflict/index.html',     kind:'page'},
+            {label:'🧠 Mind Reader',     href:'https://hii2023.github.io/growth-hub/psychology/index.html',   kind:'page'},
+            {label:'🤖 AI & Future Biz', href:'https://hii2023.github.io/growth-hub/ai-trends/index.html',   kind:'page'},
         ]
     },
     'invitation': {
-        url:   'https://heenaazaz.in/',
-        title: 'Daawat — Heena & Azaz Wedding Invite',
-        pages: []
+        url:'https://heenaazaz.in/', title:'Daawat — Heena & Azaz Wedding Invite',
+        pages:[
+            {label:'💌 Daawat E Khaas',  href:'https://heenaazaz.in/DaawatEKhaas.html', kind:'page'},
+            {label:'👫 Friends & Family', href:'https://heenaazaz.in/FNF.html',          kind:'page'},
+            {label:'👨‍👩‍👧 Relatives',       href:'https://heenaazaz.in/Relatives.html',    kind:'page'},
+            {label:'💝 Wishes',           href:'https://heenaazaz.in/wishes.html',        kind:'page'},
+            {label:'🔒 Admin',            href:'https://heenaazaz.in/admin.html',         kind:'admin'},
+        ]
     },
     'nosh7-whatsapp-crm': {
-        url:   'https://hii2023.github.io/nosh7-whatsapp-crm',
-        title: 'Nosh7 Mumbai — Fresh Salad Subscriptions',
-        pages: [
-            { label: 'Plans',        href: 'https://hii2023.github.io/nosh7-whatsapp-crm#plans',   kind: 'anchor' },
-            { label: 'How It Works', href: 'https://hii2023.github.io/nosh7-whatsapp-crm#how',     kind: 'anchor' },
-            { label: 'Menu',         href: 'https://hii2023.github.io/nosh7-whatsapp-crm#menu',    kind: 'anchor' },
-            { label: 'Reviews',      href: 'https://hii2023.github.io/nosh7-whatsapp-crm#reviews', kind: 'anchor' },
-            { label: 'FAQ',          href: 'https://hii2023.github.io/nosh7-whatsapp-crm#faq',     kind: 'anchor' },
+        url:'https://hii2023.github.io/nosh7-whatsapp-crm', title:'Nosh7 Mumbai — Fresh Salad Subscriptions',
+        pages:[
+            {label:'Plans',        href:'https://hii2023.github.io/nosh7-whatsapp-crm#plans',   kind:'anchor'},
+            {label:'How It Works', href:'https://hii2023.github.io/nosh7-whatsapp-crm#how',     kind:'anchor'},
+            {label:'Menu',         href:'https://hii2023.github.io/nosh7-whatsapp-crm#menu',    kind:'anchor'},
+            {label:'Reviews',      href:'https://hii2023.github.io/nosh7-whatsapp-crm#reviews', kind:'anchor'},
+            {label:'FAQ',          href:'https://hii2023.github.io/nosh7-whatsapp-crm#faq',     kind:'anchor'},
+            {label:'🔒 Admin',     href:'https://hii2023.github.io/nosh7-whatsapp-crm/admin.html', kind:'admin'},
         ]
     },
     'landing-page-nosh7': {
-        url:   'https://partners.nosh7.in/',
-        title: 'Nosh7 — Partner With Us',
-        pages: [
-            { label: 'Benefits',     href: 'https://partners.nosh7.in/#benefits',      kind: 'anchor' },
-            { label: 'How It Works', href: 'https://partners.nosh7.in/#how-it-works',  kind: 'anchor' },
-            { label: 'Custom Plans', href: 'https://partners.nosh7.in/#custom-plans',  kind: 'anchor' },
-            { label: 'Testimonials', href: 'https://partners.nosh7.in/#testimonials',  kind: 'anchor' },
-            { label: 'Partner Form', href: 'https://partners.nosh7.in/#partner-form',  kind: 'anchor' },
+        url:'https://partners.nosh7.in/', title:'Nosh7 — Partner With Us',
+        pages:[
+            {label:'Benefits',        href:'https://partners.nosh7.in/#benefits',       kind:'anchor'},
+            {label:'How It Works',    href:'https://partners.nosh7.in/#how-it-works',   kind:'anchor'},
+            {label:'Custom Plans',    href:'https://partners.nosh7.in/#custom-plans',   kind:'anchor'},
+            {label:'Testimonials',    href:'https://partners.nosh7.in/#testimonials',   kind:'anchor'},
+            {label:'Partner Form',    href:'https://partners.nosh7.in/#partner-form',   kind:'anchor'},
+            {label:'🗂️ Mockup Sandbox', href:'https://hii2023.github.io/landing-page-nosh7/artifacts/mockup-sandbox/index.html', kind:'page'},
+            {label:'🎨 Landing Mockup', href:'https://hii2023.github.io/landing-page-nosh7/artifacts/nosh7-landing/index.html',   kind:'page'},
         ]
     },
     'nosh7-crm': {
-        url:   'https://hii2023.github.io/nosh7-crm',
-        title: 'NOSH7 CRM Dashboard',
-        pages: [
-            { label: '📊 Dashboard',   href: null, kind: 'tab' },
-            { label: '👥 Leads',       href: null, kind: 'tab' },
-            { label: '💬 Templates',   href: null, kind: 'tab' },
-            { label: '🗂️ Categories',  href: null, kind: 'tab' },
-            { label: '📈 Analytics',   href: null, kind: 'tab' },
+        url:'https://hii2023.github.io/nosh7-crm', title:'NOSH7 CRM Dashboard',
+        pages:[
+            {label:'📊 Dashboard',  href:null, kind:'tab'},
+            {label:'👥 Leads',      href:null, kind:'tab'},
+            {label:'💬 Templates',  href:null, kind:'tab'},
+            {label:'🗂️ Categories', href:null, kind:'tab'},
+            {label:'📈 Analytics',  href:null, kind:'tab'},
         ]
     },
     'nosh7-in': {
-        url:   'https://nosh7.in/',
-        title: 'NOSH7 — Fresh Salad Delivery, Ahmedabad',
-        pages: [
-            { label: 'Subscriptions', href: 'https://nosh7.in/subscription.html',        kind: 'page' },
-            { label: 'Health Blog',   href: 'https://nosh7.in/blog.html',                kind: 'page' },
-            { label: 'Ahmedabad',     href: 'https://nosh7.in/ahmedabad.html',           kind: 'page' },
-            { label: '📋 Full Menu',  href: 'https://nosh7.in/assets/nosh7-menu.jpg',   kind: 'page' },
+        url:'https://nosh7.in/', title:'NOSH7 — Fresh Salad Delivery, Ahmedabad',
+        pages:[
+            {label:'Subscriptions',        href:'https://nosh7.in/subscription.html',                                          kind:'page'},
+            {label:'Health Blog',          href:'https://nosh7.in/blog.html',                                                  kind:'page'},
+            {label:'Ahmedabad',            href:'https://nosh7.in/ahmedabad.html',                                             kind:'page'},
+            {label:'📋 Full Menu',         href:'https://nosh7.in/assets/nosh7-menu.jpg',                                     kind:'page'},
+            {label:'🏢 Diet for Corporate',href:'https://nosh7.in/diet-services-for-professional-and-corporate/',             kind:'page'},
+            {label:'🔒 Admin Panel',       href:'https://nosh7.in/adminkapower.html',                                         kind:'admin'},
         ]
     },
     'Test-Writing-Tool': {
-        url:   'https://hii2023.github.io/Test-Writing-Tool',
-        title: 'NOSH7 Sales Engine',
-        pages: []
+        url:'https://hii2023.github.io/Test-Writing-Tool', title:'NOSH7 Sales Engine',
+        pages:[]
     },
     'nosh7in': {
-        url:   'https://hii2023.github.io/nosh7in',
-        title: 'NOSH7 Ahmedabad — Salad Subscription',
-        pages: [
-            { label: 'Subscriptions', href: 'https://hii2023.github.io/nosh7in/subscription.html', kind: 'page' },
-            { label: 'Health Blog',   href: 'https://hii2023.github.io/nosh7in/blog.html',         kind: 'page' },
-            { label: 'Ahmedabad',     href: 'https://hii2023.github.io/nosh7in/ahmedabad.html',    kind: 'page' },
+        url:'https://hii2023.github.io/nosh7in', title:'NOSH7 Ahmedabad — Salad Subscription',
+        pages:[
+            {label:'Subscriptions', href:'https://hii2023.github.io/nosh7in/subscription.html',  kind:'page'},
+            {label:'Health Blog',   href:'https://hii2023.github.io/nosh7in/blog.html',          kind:'page'},
+            {label:'Ahmedabad',     href:'https://hii2023.github.io/nosh7in/ahmedabad.html',     kind:'page'},
+            {label:'🔒 Admin Panel',href:'https://hii2023.github.io/nosh7in/adminkapower.html',  kind:'admin'},
         ]
     },
 };
 
-/* ── SMART FALLBACK DESCRIPTIONS ── */
+/* ── PRE-LOADED "OTHER SOURCES" (non-GitHub sites) ── */
+const DEFAULT_SOURCES = [
+    {
+        id:'__canva_dashboard',
+        name:'Nosh7 Canva Dashboard',
+        url:'https://nosh7veg.my.canva.site/dashboard',
+        image:'',
+        description:'Canva design workspace and dashboard for Nosh7 brand assets.',
+        icon:'🎨',
+        subpages:[]
+    }
+];
+
+/* ── FALLBACK DESCRIPTIONS ── */
 const DESC = {
     'nosh7-whatsapp-crm': 'WhatsApp CRM system for Nosh7 subscription management',
     'nosh7-crm':          'Customer relationship management dashboard for Nosh7',
@@ -462,7 +424,6 @@ const DESC = {
     'SAPNA':              "Sapna's Art Studio — handcrafted with love",
 };
 
-/* ── BANNER GRADIENTS ── */
 const BANNERS = [
     'linear-gradient(135deg,#0077b6,#00b4d8)',
     'linear-gradient(135deg,#023e8a,#0096c7)',
@@ -473,234 +434,366 @@ const BANNERS = [
     'linear-gradient(135deg,#00b4d8,#7fc8f8)',
     'linear-gradient(135deg,#1d3557,#457b9d)',
 ];
+const SOURCE_BANNERS = [
+    'linear-gradient(135deg,#7c3aed,#4f46e5)',
+    'linear-gradient(135deg,#db2777,#9333ea)',
+    'linear-gradient(135deg,#ea580c,#d97706)',
+    'linear-gradient(135deg,#059669,#0891b2)',
+];
 
-/* ── EMOJI ICONS ── */
 const ICONS = [
     ['whatsapp','💬'],['crm','📊'],['nosh7','🍱'],['food','🍽️'],
     ['partner','🤝'],['outreach','📣'],['growth','📈'],['lead','🎯'],
     ['invitation','💌'],['business','💼'],['item','📦'],
     ['test','🧪'],['tool','🔧'],['sapna','✨'],['landing','🌐'],
+    ['canva','🎨'],['notion','📝'],['figma','🖌️'],['sheet','📊'],
+    ['dashboard','📋'],['admin','⚙️'],
 ];
-function icon(name) {
+function getIcon(name='') {
     const l = name.toLowerCase();
-    for (const [k, e] of ICONS) if (l.includes(k)) return e;
+    for (const [k,e] of ICONS) if (l.includes(k)) return e;
     return '📁';
 }
 
-/* ── GROUPING ── */
-const GROUP_ORDER = ['nosh7','websites','tools','other'];
-const GROUP_NAME  = { nosh7:'🍱  Nosh7 Projects', websites:'🌐  Websites', tools:'🔧  Tools & Apps', other:'📁  Other' };
-
-function group(name) {
+const GROUP_ORDER = ['nosh7','websites','tools','sources','other'];
+const GROUP_NAME  = {nosh7:'🍱  Nosh7 Projects', websites:'🌐  Websites', tools:'🔧  Tools & Apps', sources:'🔗  Other Sources', other:'📁  Other'};
+function getGroup(name) {
     const l = name.toLowerCase();
-    if (l.includes('nosh'))   return 'nosh7';
+    if (l.includes('nosh')) return 'nosh7';
     if (['sapna','test-writing-tool','growth-hub','leaqualify'].includes(l)) return 'tools';
     if (['item','businessfirst','invitation'].includes(l)) return 'websites';
     return 'other';
 }
-
-/* ── TIME AGO ── */
 function ago(d) {
-    const s = Math.floor((Date.now() - new Date(d)) / 1000);
-    if (s < 60)      return 'just now';
-    if (s < 3600)    return Math.floor(s/60)   + 'm ago';
-    if (s < 86400)   return Math.floor(s/3600) + 'h ago';
-    if (s < 2592000) return Math.floor(s/86400)+ 'd ago';
-    return new Date(d).toLocaleDateString('en-IN', { month:'short', year:'numeric' });
+    const s = Math.floor((Date.now()-new Date(d))/1000);
+    if (s<60) return 'just now';
+    if (s<3600) return Math.floor(s/60)+'m ago';
+    if (s<86400) return Math.floor(s/3600)+'h ago';
+    if (s<2592000) return Math.floor(s/86400)+'d ago';
+    return new Date(d).toLocaleDateString('en-IN',{month:'short',year:'numeric'});
 }
 
-/* ── BUILD ONE CARD ── */
-function card(repo, bannerIdx) {
-    const s       = SITE[repo.name]  || {};
-    const siteUrl = s.url || repo.homepage || null;   // website URL first, then GitHub homepage
-    const openUrl = siteUrl || repo.html_url;          // final fallback = GitHub repo page
-    const isLive  = !!siteUrl;
-    const pages   = s.pages || [];
-    const title   = s.title || repo.name;
-    const desc    = repo.description || DESC[repo.name] || 'No description yet.';
-    const hasDesc = !!(repo.description || DESC[repo.name]);
-    const dispUrl = openUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
-    const bg      = BANNERS[bannerIdx % BANNERS.length];
+/* ── BUILD GITHUB REPO CARD ── */
+function buildRepoCard(repo, bannerIdx) {
+    const s        = SITE[repo.name] || {};
+    const siteUrl  = s.url || repo.homepage || null;
+    const openUrl  = siteUrl || repo.html_url;
+    const isLive   = !!siteUrl;
+    const pages    = s.pages || [];
+    const title    = s.title || repo.name;
+    const descTxt  = repo.description || DESC[repo.name] || '';
+    const hasDesc  = !!descTxt;
+    const dispUrl  = openUrl.replace(/^https?:\/\//,'').replace(/\/$/,'');
+    const bg       = BANNERS[bannerIdx % BANNERS.length];
 
-    /* Sub-page chips */
     let subSection = '';
-    if (pages.length > 0) {
-        const kindLabel = pages.some(p => p.kind === 'page')   ? 'Sub-pages'
-                        : pages.some(p => p.kind === 'anchor') ? 'Sections on this page'
-                        : 'Views inside this app';
+    if (pages.length) {
+        const hasReal   = pages.some(p=>p.kind==='page'||p.kind==='admin');
+        const hasAnchor = pages.some(p=>p.kind==='anchor');
+        const hasTabs   = pages.some(p=>p.kind==='tab');
+        const kindLabel = hasReal ? 'Pages in this repo' : hasAnchor ? 'Sections on this page' : 'Views inside this app';
 
         const chips = pages.map(p => {
-            if (p.kind === 'tab' || !p.href) {
-                return '<span class="chip chip-tab">' + p.label + '</span>';
-            }
-            const chipClass = p.kind === 'page' ? 'chip chip-page' : 'chip chip-anchor';
-            const prefix    = p.kind === 'page' ? '↗ ' : '# ';
-            return '<a class="' + chipClass + '" href="' + p.href + '" target="_blank">' + prefix + p.label + '</a>';
+            if (p.kind==='tab'||!p.href) return '<span class="chip chip-tab">'+p.label+'</span>';
+            const cls = p.kind==='admin'?'chip chip-admin': p.kind==='anchor'?'chip chip-anchor':'chip chip-page';
+            const pfx = p.kind==='admin'?'🔒 ': p.kind==='page'?'↗ ':'# ';
+            return '<a class="'+cls+'" href="'+p.href+'" target="_blank">'+pfx+p.label+'</a>';
         }).join('');
-
-        subSection = '<div class="sub-section"><div class="sub-label">' + kindLabel + '</div><div class="sub-chips">' + chips + '</div></div>';
+        subSection = '<div class="sub-section"><div class="sub-label">'+kindLabel+'</div><div class="sub-chips">'+chips+'</div></div>';
     }
 
     return (
-        '<div class="card" data-group="' + group(repo.name) + '" ' +
-             'data-search="' + (title + ' ' + repo.name + ' ' + desc).toLowerCase().replace(/"/g, '') + '" ' +
-             'data-url="' + openUrl + '">' +
-            '<div class="banner" style="background:' + bg + '">' +
-                icon(repo.name) +
-                '<span class="banner-badge ' + (isLive ? 'badge-live' : 'badge-github') + '">' +
-                    (isLive ? '● Live' : 'GitHub') +
-                '</span>' +
-            '</div>' +
-            '<div class="card-body">' +
-                '<div class="card-title">' + title + '</div>' +
-                '<div class="card-url">' + dispUrl + '</div>' +
-                '<div class="card-desc' + (hasDesc ? '' : ' empty') + '">' + desc + '</div>' +
-                subSection +
-                '<div class="card-footer">' +
-                    '<span class="card-updated">Updated ' + ago(repo.updated_at) + '</span>' +
-                    '<a class="open-btn ' + (isLive ? 'btn-live' : 'btn-github') + '" ' +
-                       'href="' + openUrl + '" target="_blank">' +
-                        (isLive ? '🔗 Open Site' : 'GitHub →') +
-                    '</a>' +
-                '</div>' +
-            '</div>' +
+        '<div class="card" data-group="'+getGroup(repo.name)+'" '+
+             'data-search="'+(title+' '+repo.name+' '+descTxt).toLowerCase().replace(/"/g,'')+'" '+
+             'data-url="'+openUrl+'">' +
+            '<div class="banner" style="background:'+bg+'">'+
+                '<span class="banner-emoji">'+getIcon(repo.name)+'</span>'+
+                '<span class="banner-badge '+(isLive?'badge-live':'badge-github')+'">'+(isLive?'● Live':'GitHub')+'</span>'+
+            '</div>'+
+            '<div class="card-body">'+
+                '<div class="card-title">'+title+'</div>'+
+                '<div class="card-url">'+dispUrl+'</div>'+
+                '<div class="card-desc'+(hasDesc?'':' empty')+'">'+(hasDesc?descTxt:'No description yet.')+'</div>'+
+                subSection+
+                '<div class="card-footer">'+
+                    '<span class="card-updated">Updated '+ago(repo.updated_at)+'</span>'+
+                    '<a class="open-btn '+(isLive?'btn-live':'btn-github')+'" href="'+openUrl+'" target="_blank">'+(isLive?'🔗 Open Site':'GitHub →')+'</a>'+
+                '</div>'+
+            '</div>'+
         '</div>'
     );
 }
 
-/* ── RENDER GRID ── */
-function renderGrid(repos) {
-    const grid = document.getElementById('main-grid');
+/* ── BUILD CUSTOM / OTHER SOURCE CARD ── */
+function buildSourceCard(src, bannerIdx, deletable) {
+    const openUrl  = src.url || '#';
+    const dispUrl  = openUrl.replace(/^https?:\/\//,'').replace(/\/$/,'');
+    const bg       = src.image ? '' : SOURCE_BANNERS[bannerIdx % SOURCE_BANNERS.length];
+    const bannerStyle = src.image
+        ? 'background-image:url('+src.image+');background-size:cover;background-position:center;'
+        : 'background:'+bg+';';
+    const subpages = src.subpages || [];
+    let subSection = '';
+    if (subpages.length) {
+        const chips = subpages.map(p =>
+            '<a class="chip chip-page" href="'+p.url+'" target="_blank">↗ '+p.name+'</a>'
+        ).join('');
+        subSection = '<div class="sub-section"><div class="sub-label">Other links</div><div class="sub-chips">'+chips+'</div></div>';
+    }
+    const deleteBtn = deletable
+        ? '<button class="card-delete" onclick="deleteSource(event,\''+src.id+'\')" title="Remove">×</button>'
+        : '';
 
-    /* Sort by group order then recency */
-    const sorted = [...repos].sort((a, b) => {
-        const diff = GROUP_ORDER.indexOf(group(a.name)) - GROUP_ORDER.indexOf(group(b.name));
-        return diff !== 0 ? diff : new Date(b.updated_at) - new Date(a.updated_at);
+    return (
+        '<div class="card" data-group="sources" '+
+             'data-search="'+(src.name+' '+(src.description||'')).toLowerCase().replace(/"/g,'')+'" '+
+             'data-url="'+openUrl+'" data-source-id="'+src.id+'">' +
+            deleteBtn+
+            '<div class="banner" style="'+bannerStyle+'">'+
+                '<span class="banner-emoji">'+(src.image?'':'(src.icon||getIcon(src.name))')+'</span>'+
+                '<span class="banner-badge badge-source">External</span>'+
+            '</div>'+
+            '<div class="card-body">'+
+                '<div class="card-title">'+src.name+'</div>'+
+                '<div class="card-url">'+dispUrl+'</div>'+
+                '<div class="card-desc'+(src.description?'':' empty')+'">'+(src.description||'No description.')+'</div>'+
+                subSection+
+                '<div class="card-footer">'+
+                    '<span class="card-updated">External Source</span>'+
+                    '<a class="open-btn btn-source" href="'+openUrl+'" target="_blank">🔗 Open</a>'+
+                '</div>'+
+            '</div>'+
+        '</div>'
+    );
+}
+
+/* ── FIX: source card emoji interpolation bug ── */
+function fixSourceEmoji(src) {
+    const em = src.image ? '' : (src.icon || getIcon(src.name));
+    return em;
+}
+
+/* ── RENDER EVERYTHING ── */
+function renderAll(repos) {
+    const grid   = document.getElementById('main-grid');
+    const custom = loadCustom();
+    const allSrc = [...DEFAULT_SOURCES, ...custom];
+
+    /* Sort repos by group then recency */
+    const sorted = [...repos].sort((a,b) => {
+        const d = GROUP_ORDER.indexOf(getGroup(a.name)) - GROUP_ORDER.indexOf(getGroup(b.name));
+        return d!==0 ? d : new Date(b.updated_at)-new Date(a.updated_at);
     });
 
-    /* Build HTML for cards with group dividers */
     let html = '';
     let lastGroup = null;
+
     sorted.forEach((repo, i) => {
-        const g = group(repo.name);
-        if (g !== lastGroup) {
-            html += '<div class="group-divider">' + GROUP_NAME[g] + '</div>';
-            lastGroup = g;
-        }
-        html += card(repo, i);
+        const g = getGroup(repo.name);
+        if (g!==lastGroup) { html += '<div class="group-divider">'+GROUP_NAME[g]+'</div>'; lastGroup=g; }
+        html += buildRepoCard(repo, i);
     });
+
+    /* Other Sources */
+    if (allSrc.length) {
+        html += '<div class="group-divider">'+GROUP_NAME['sources']+'</div>';
+        allSrc.forEach((src, i) => { html += buildSourceCard(src, i, !!src._custom); });
+    }
 
     grid.innerHTML = html;
 
-    /* Click handler — card click opens the site URL */
+    /* Fix source card emojis (template string bug workaround) */
+    grid.querySelectorAll('[data-source-id]').forEach(el => {
+        const id  = el.dataset.sourceId;
+        const src = allSrc.find(s=>s.id===id);
+        if (!src) return;
+        const emojiSpan = el.querySelector('.banner-emoji');
+        if (emojiSpan) emojiSpan.textContent = fixSourceEmoji(src);
+    });
+
+    /* Click handler */
     grid.querySelectorAll('.card').forEach(el => {
-        el.addEventListener('click', function(e) {
-            /* If user clicked a chip link or open-btn, let the link handle it */
-            if (e.target.closest('a')) return;
+        el.addEventListener('click', e => {
+            if (e.target.closest('a')||e.target.closest('button')) return;
             window.open(el.dataset.url, '_blank');
         });
     });
+
+    applyFilter();
 }
 
 /* ── FILTER ── */
 let activeGroup = 'all';
-let allCards    = [];
-
 function applyFilter() {
-    const q   = document.getElementById('search-input').value.toLowerCase().trim();
+    const q    = (document.getElementById('search-input').value||'').toLowerCase().trim();
     const grid = document.getElementById('main-grid');
     let visible = 0;
 
     grid.querySelectorAll('.card').forEach(el => {
-        const groupOk  = activeGroup === 'all' || el.dataset.group === activeGroup;
-        const searchOk = !q || el.dataset.search.includes(q);
-        const show     = groupOk && searchOk;
-        el.style.display = show ? '' : 'none';
-        if (show) visible++;
+        const ok = (activeGroup==='all'||el.dataset.group===activeGroup)
+                && (!q||el.dataset.search.includes(q));
+        el.style.display = ok ? '' : 'none';
+        if (ok) visible++;
     });
-
-    /* Show/hide group dividers */
     grid.querySelectorAll('.group-divider').forEach(div => {
-        /* Show divider if any following card (before next divider) is visible */
-        let next = div.nextElementSibling;
-        let anyVisible = false;
-        while (next && !next.classList.contains('group-divider')) {
-            if (next.style.display !== 'none') { anyVisible = true; break; }
-            next = next.nextElementSibling;
+        let next=div.nextElementSibling, any=false;
+        while (next&&!next.classList.contains('group-divider')) {
+            if (next.style.display!=='none'){any=true;break;}
+            next=next.nextElementSibling;
         }
-        div.style.display = anyVisible ? '' : 'none';
+        div.style.display = any ? '' : 'none';
     });
-
-    /* No results message */
-    let noRes = grid.querySelector('.no-results');
-    if (!noRes) {
-        noRes = document.createElement('div');
-        noRes.className = 'no-results';
-        noRes.textContent = 'No projects match your search.';
-        grid.appendChild(noRes);
-    }
-    noRes.style.display = visible ? 'none' : '';
+    let nr = grid.querySelector('.no-results');
+    if (!nr) { nr=document.createElement('div'); nr.className='no-results'; nr.textContent='No results found.'; grid.appendChild(nr); }
+    nr.style.display = visible ? 'none' : '';
 }
 
-/* Wire up controls */
 document.getElementById('search-input').addEventListener('input', applyFilter);
-
-document.getElementById('filter-bar').addEventListener('click', function(e) {
+document.getElementById('filter-bar').addEventListener('click', e => {
     const btn = e.target.closest('.filter-btn');
     if (!btn) return;
     activeGroup = btn.dataset.group;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     applyFilter();
 });
 
-/* ── FETCH FROM GITHUB ── */
+/* ── CUSTOM LINKS (localStorage) ── */
+const LS_KEY = 'myprojects_custom_links';
+function loadCustom() {
+    try { return JSON.parse(localStorage.getItem(LS_KEY)||'[]').map(s=>({...s,_custom:true})); }
+    catch { return []; }
+}
+function saveCustom(arr) {
+    localStorage.setItem(LS_KEY, JSON.stringify(arr.map(({_custom,...s})=>s)));
+}
+function deleteSource(e, id) {
+    e.stopPropagation();
+    if (!confirm('Remove this link?')) return;
+    const arr = loadCustom().filter(s=>s.id!==id);
+    saveCustom(arr);
+    document.querySelector('[data-source-id="'+id+'"]')?.remove();
+    applyFilter();
+}
+
+/* ── MODAL ── */
+let subRowCount = 0;
+function openModal() {
+    document.getElementById('f-name').value='';
+    document.getElementById('f-url').value='';
+    document.getElementById('f-image').value='';
+    document.getElementById('f-desc').value='';
+    document.getElementById('subpage-rows').innerHTML='';
+    document.getElementById('img-preview').style.display='none';
+    subRowCount=0;
+    document.getElementById('modal-overlay').classList.add('open');
+    document.getElementById('f-name').focus();
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+function previewImg(url) {
+    const p = document.getElementById('img-preview');
+    if (url && url.startsWith('http')) { p.style.backgroundImage='url('+url+')'; p.style.display='block'; }
+    else p.style.display='none';
+}
+
+function addSubpageRow(name='', url='') {
+    subRowCount++;
+    const div = document.createElement('div');
+    div.className='subpage-row'; div.dataset.rowId=subRowCount;
+    div.innerHTML = '<input type="text" placeholder="Page name" value="'+name.replace(/"/g,'&quot;')+'" class="sp-name" />'+
+                    '<input type="url"  placeholder="https://…"  value="'+url.replace(/"/g,'&quot;')+'"  class="sp-url"  />'+
+                    '<button class="rm-btn" onclick="this.parentElement.remove()">×</button>';
+    document.getElementById('subpage-rows').appendChild(div);
+}
+
+function saveLink() {
+    const name = document.getElementById('f-name').value.trim();
+    const url  = document.getElementById('f-url').value.trim();
+    if (!name||!url) { alert('Please fill in at least the Name and URL.'); return; }
+
+    const subpages = [...document.querySelectorAll('#subpage-rows .subpage-row')].map(row => ({
+        name: row.querySelector('.sp-name').value.trim(),
+        url:  row.querySelector('.sp-url').value.trim(),
+    })).filter(p=>p.name&&p.url);
+
+    const entry = {
+        id:          '__custom_'+Date.now(),
+        name,
+        url,
+        image:       document.getElementById('f-image').value.trim(),
+        description: document.getElementById('f-desc').value.trim(),
+        icon:        getIcon(name),
+        subpages,
+    };
+
+    const arr = loadCustom();
+    arr.push(entry);
+    saveCustom(arr);
+    closeModal();
+
+    /* Inject new card immediately without full re-render */
+    const grid    = document.getElementById('main-grid');
+    const srcDivs = [...grid.querySelectorAll('[data-group="sources"]')];
+    const newHtml = buildSourceCard({...entry,_custom:true}, srcDivs.length, true);
+    const tmp     = document.createElement('div'); tmp.innerHTML = newHtml;
+    const newCard = tmp.firstElementChild;
+    const emojiSpan = newCard.querySelector('.banner-emoji');
+    if (emojiSpan) emojiSpan.textContent = fixSourceEmoji(entry);
+    newCard.addEventListener('click', e => {
+        if (e.target.closest('a')||e.target.closest('button')) return;
+        window.open(entry.url, '_blank');
+    });
+    grid.appendChild(newCard);
+    applyFilter();
+}
+
+/* ── FETCH GITHUB REPOS ── */
 async function loadRepos() {
-    let page = 1, all = [];
+    let page=1, all=[];
     while (true) {
-        const res   = await fetch('https://api.github.com/users/hii2023/repos?per_page=100&sort=updated&page=' + page);
-        if (!res.ok) throw new Error('GitHub API error ' + res.status);
+        const res = await fetch('https://api.github.com/users/hii2023/repos?per_page=100&sort=updated&page='+page);
+        if (!res.ok) throw new Error('GitHub API error '+res.status);
         const batch = await res.json();
-        if (!Array.isArray(batch) || batch.length === 0) break;
+        if (!Array.isArray(batch)||!batch.length) break;
         all = all.concat(batch);
-        if (batch.length < 100) break;
+        if (batch.length<100) break;
         page++;
     }
     return all;
 }
 
 /* ── MAIN ── */
-(async function () {
+(async function(){
     try {
         const repos = await loadRepos();
+        const custom = loadCustom();
+        const allSrc = [...DEFAULT_SOURCES,...custom];
 
-        /* Stats bar */
-        const liveCount  = repos.filter(r => SITE[r.name]?.url || r.homepage).length;
-        const subCount   = Object.values(SITE).reduce((n, s) => n + (s.pages||[]).filter(p => p.href).length, 0);
-        const langs      = [...new Set(repos.map(r => r.language).filter(Boolean))];
+        /* Count all clickable pages */
+        const allPages = Object.values(SITE).reduce((n,s)=>n+(s.pages||[]).filter(p=>p.href).length,0);
+        const liveCount = repos.filter(r=>SITE[r.name]?.url||r.homepage).length;
+        const langs = [...new Set(repos.map(r=>r.language).filter(Boolean))];
+
         document.getElementById('stats-row').innerHTML =
-            '<div class="stat-pill"><strong>' + repos.length + '</strong> Projects</div>' +
-            '<div class="stat-pill"><strong>' + liveCount   + '</strong> Live Sites</div>' +
-            '<div class="stat-pill"><strong>' + subCount    + '</strong> Sub-pages</div>' +
-            '<div class="stat-pill"><strong>' + langs.length + '</strong> Languages</div>';
+            '<div class="stat-pill"><strong>'+repos.length+'</strong> Projects</div>'+
+            '<div class="stat-pill"><strong>'+liveCount+'</strong> Live Sites</div>'+
+            '<div class="stat-pill"><strong>'+allPages+'</strong> Sub-pages</div>'+
+            '<div class="stat-pill"><strong>'+allSrc.length+'</strong> Other Sources</div>'+
+            '<div class="stat-pill"><strong>'+langs.length+'</strong> Languages</div>';
 
-        renderGrid(repos);
+        renderAll(repos);
 
-    } catch (err) {
-        /* If API fails, still show all sites from SITE_DATA */
-        const fallback = Object.entries(SITE).map(([name, s]) => ({
-            name,
-            description: null,
-            homepage: s.url,
-            html_url: 'https://github.com/hii2023/' + name,
-            updated_at: new Date().toISOString(),
-            language: null,
+    } catch(err) {
+        /* Fallback: show everything from SITE_DATA even without GitHub API */
+        const fallback = Object.entries(SITE).map(([name,s])=>({
+            name, description:null, homepage:s.url,
+            html_url:'https://github.com/hii2023/'+name,
+            updated_at:new Date().toISOString(), language:null,
         }));
-
         document.getElementById('stats-row').innerHTML =
             '<div class="stat-pill">⚠️ GitHub offline — showing cached data</div>';
-
-        renderGrid(fallback);
+        renderAll(fallback);
     }
 })();
 </script>
