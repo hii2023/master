@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(160deg, #0a2342 0%, #0e4d6e 40%, #0d7d9e 75%, #1ab3cc 100%);
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        /* ── HEADER ── */
+        .hero {
+            text-align: center;
+            padding: 3.5rem 1.5rem 2rem;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            color: #fff;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+        .hero-title span {
+            background: linear-gradient(90deg, #7df9ff, #a8edff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-sub {
+            color: rgba(255,255,255,0.65);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* ── STATS ── */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1.75rem;
+        }
+        .stat-pill {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 40px;
+            padding: 0.45rem 1.1rem;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+        }
+        .stat-pill strong { color: #fff; }
+
+        /* ── SEARCH + FILTERS ── */
+        .controls {
+            max-width: 700px;
+            margin: 2rem auto 0;
+            padding: 0 1.5rem;
+        }
+        .search-wrap {
+            position: relative;
+        }
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+        .search-wrap input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.6rem;
+            border-radius: 14px;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .search-wrap input::placeholder { color: rgba(255,255,255,0.45); }
+        .search-wrap input:focus {
+            border-color: rgba(125,249,255,0.6);
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* ── GROUP FILTER PILLS ── */
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            border: 1.5px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.75);
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+        }
+        .filter-btn.active {
+            background: rgba(125,249,255,0.25);
+            border-color: #7df9ff;
+            color: #7df9ff;
+        }
+
+        /* ── MAIN GRID ── */
+        .container {
+            max-width: 1140px;
+            margin: 2rem auto 4rem;
+            padding: 0 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 18px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
+            display: flex;
+            flex-direction: column;
+            color: #1a1a2e;
+            text-decoration: none;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .card:active { transform: translateY(-2px); }
+
+        /* Coloured top panel */
+        .card-banner {
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.2rem;
+            line-height: 1;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* "No live site" ribbon */
+        .ribbon {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 0.62rem;
+            font-weight: 600;
+            padding: 0.2rem 0.55rem;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.2);
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+        .ribbon.live {
+            background: rgba(255,255,255,0.25);
+            color: #fff;
+        }
+
+        .card-body {
+            padding: 1.1rem 1.2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.45rem;
+            word-break: break-word;
+        }
+        .card-desc {
+            font-size: 0.835rem;
+            color: #6b7280;
+            line-height: 1.55;
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+        .card-desc.empty { font-style: italic; color: #c0c4cc; }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+        .updated {
+            font-size: 0.7rem;
+            color: #9ca3af;
+        }
+        .open-btn {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.38rem 0.85rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: opacity 0.15s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .open-btn:hover { opacity: 0.8; }
+        .btn-live  { background: #0ea5e9; color: #fff; }
+        .btn-github { background: #1f2937; color: #fff; }
+
+        /* ── GROUP SECTION LABEL ── */
+        .group-label {
+            grid-column: 1 / -1;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            margin-top: 0.5rem;
+        }
+
+        /* ── EMPTY / LOADING ── */
+        .state-box {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: rgba(255,255,255,0.6);
+            grid-column: 1/-1;
+        }
+        .spinner {
+            display: inline-block;
+            width: 38px; height: 38px;
+            border: 3px solid rgba(255,255,255,0.15);
+            border-top-color: #7df9ff;
+            border-radius: 50%;
+            animation: spin 0.75s linear infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.77rem;
+            color: rgba(255,255,255,0.35);
+        }
+        footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+        footer a:hover { color: rgba(255,255,255,0.7); }
+
+        @media (max-width: 480px) {
+            .grid { grid-template-columns: 1fr; gap: 1rem; }
+            .hero-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <h1 class="hero-title">Things I've <span>Built</span> 🚀</h1>
+    <p class="hero-sub">Live from GitHub · Updates automatically</p>
+    <div class="stats-row" id="stats"></div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+    <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="search" type="text" placeholder="Search projects…" oninput="applyFilters()" />
+    </div>
+    <div class="filters" id="filters">
+        <button class="filter-btn active" data-group="all" onclick="setGroup('all', this)">All</button>
+        <button class="filter-btn" data-group="nosh7"    onclick="setGroup('nosh7', this)">🍱 Nosh7</button>
+        <button class="filter-btn" data-group="websites" onclick="setGroup('websites', this)">🌐 Websites</button>
+        <button class="filter-btn" data-group="tools"    onclick="setGroup('tools', this)">🔧 Tools</button>
+    </div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="container">
+    <div id="repos-grid" class="grid">
+        <div class="state-box">
+            <div class="spinner"></div><br>Loading your projects…
+        </div>
+    </div>
+    <div id="no-results" class="no-results">No projects match your search.</div>
+</div>
+
+<footer>
+    ✦ Auto-updated live from GitHub ·
+    <a href="https://github.com/hii2023" target="_blank">github.com/hii2023</a>
+</footer>
+
+<script>
+/* ─── CONFIG ─────────────────────────────── */
+const USERNAME = 'hii2023';
+
+/* Banner colours cycling through ocean palette */
+const BANNER_COLORS = [
+    'linear-gradient(135deg,#0077b6,#00b4d8)',
+    'linear-gradient(135deg,#023e8a,#0096c7)',
+    'linear-gradient(135deg,#0089a7,#48cae4)',
+    'linear-gradient(135deg,#005f73,#0a9396)',
+    'linear-gradient(135deg,#03045e,#0077b6)',
+    'linear-gradient(135deg,#0582ca,#06d6a0)',
+    'linear-gradient(135deg,#00b4d8,#90e0ef)',
+    'linear-gradient(135deg,#1d3557,#457b9d)',
+];
+
+/* Emoji icon mapping */
+const ICON_MAP = [
+    ['whatsapp','💬'], ['crm','📊'], ['nosh7','🍱'], ['food','🍽️'],
+    ['landing','🌐'], ['outreach','📣'], ['growth','📈'], ['lead','🎯'],
+    ['invitation','💌'], ['invite','💌'], ['business','💼'],
+    ['item','📦'], ['test','🧪'], ['tool','🔧'], ['sapna','✨'],
+];
+function getIcon(name) {
+    const l = name.toLowerCase();
+    for (const [k, i] of ICON_MAP) if (l.includes(k)) return i;
+    return '📁';
+}
+
+/* Group classification */
+const GROUPS = {
+    nosh7:    n => n.toLowerCase().includes('nosh7') || n.toLowerCase().includes('nosh'),
+    tools:    n => ['sapna','test-writing-tool','growth-hub'].includes(n.toLowerCase()),
+    websites: n => ['item','businessfirst','leaqualify','invitation','landing-page-nosh7'].includes(n.toLowerCase()),
+};
+function getGroup(name) {
+    for (const [g, fn] of Object.entries(GROUPS)) if (fn(name)) return g;
+    return 'other';
+}
+
+/* Smart descriptions when GitHub has none */
+const SMART_DESCS = {
+    'nosh7-whatsapp-crm':  'WhatsApp CRM system for Nosh7 subscription management',
+    'nosh7-crm':           'Customer relationship management dashboard for Nosh7',
+    'nosh7-outreach':      'Outreach and marketing automation for Nosh7',
+    'landing-page-nosh7':  'Landing page for Nosh7 — built with TypeScript',
+    'nosh7-in':            'Nosh7 India web module',
+    'nosh7in':             'Additional Nosh7 website module',
+    'growth-hub':          'Growth tracking and analytics hub',
+    'invitation':          'Digital invitation page',
+    'leaqualify':          'Lead qualification tool',
+    'BusinessFirst':       'Business-focused web project',
+    'item':                'Item management web app',
+    'Test-Writing-Tool':   'Writing and test generation tool',
+    'SAPNA':               'SAPNA — JavaScript-powered project',
+};
+function getDesc(repo) {
+    if (repo.description) return { text: repo.description, empty: false };
+    const s = SMART_DESCS[repo.name];
+    if (s) return { text: s, empty: false };
+    return { text: 'No description yet — add one on GitHub!', empty: true };
+}
+
+function timeAgo(d) {
+    const s = Math.floor((Date.now() - new Date(d)) / 1000);
+    if (s < 60)      return 'just now';
+    if (s < 3600)    return `${Math.floor(s/60)}m ago`;
+    if (s < 86400)   return `${Math.floor(s/3600)}h ago`;
+    if (s < 2592000) return `${Math.floor(s/86400)}d ago`;
+    return new Date(d).toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+}
+
+/* ─── STATE ─────────────────────────────── */
+let ALL_REPOS  = [];
+let activeGroup = 'all';
+
+/* ─── FETCH ─────────────────────────────── */
+async function fetchRepos() {
+    let page = 1, all = [];
+    while (true) {
+        const r = await fetch(`https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated&page=${page}`);
+        const repos = await r.json();
+        if (!Array.isArray(repos) || !repos.length) break;
+        all = all.concat(repos);
+        if (repos.length < 100) break;
+        page++;
+    }
+    return all;
+}
+
+/* ─── RENDER ─────────────────────────────── */
+function buildCard(repo, colorIdx) {
+    const desc   = getDesc(repo);
+    const icon   = getIcon(repo.name);
+    const url    = repo.homepage || repo.html_url;        // primary URL = live site if available
+    const isLive = !!repo.homepage;
+    const banner = BANNER_COLORS[colorIdx % BANNER_COLORS.length];
+    const btnClass = isLive ? 'btn-live' : 'btn-github';
+    const btnLabel = isLive ? '🔗 Open Site' : 'GitHub →';
+
+    return `
+        <div class="card"
+             data-group="${getGroup(repo.name)}"
+             data-search="${repo.name.toLowerCase()} ${(repo.description||'').toLowerCase()}"
+             onclick="window.open('${url}','_blank')">
+
+            <div class="card-banner" style="background:${banner}">
+                ${icon}
+                <span class="ribbon ${isLive ? 'live' : ''}">${isLive ? '● Live' : 'GitHub'}</span>
+            </div>
+
+            <div class="card-body">
+                <div class="card-name">${repo.name}</div>
+                <p class="card-desc ${desc.empty ? 'empty' : ''}">${desc.text}</p>
+                <div class="card-footer">
+                    <span class="updated">Updated ${timeAgo(repo.updated_at)}</span>
+                    <a class="open-btn ${btnClass}"
+                       href="${url}"
+                       target="_blank"
+                       onclick="event.stopPropagation()">${btnLabel}</a>
+                </div>
+            </div>
+        </div>`;
+}
+
+/* ─── FILTER ─────────────────────────────── */
+function applyFilters() {
+    const q = document.getElementById('search').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.card');
+    const labels = document.querySelectorAll('.group-label');
+    let visible = 0;
+
+    labels.forEach(l => l.remove()); // remove old labels before re-inserting
+
+    cards.forEach(c => {
+        const groupMatch = activeGroup === 'all' || c.dataset.group === activeGroup;
+        const searchMatch = !q || c.dataset.search.includes(q);
+        const show = groupMatch && searchMatch;
+        c.style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    // Re-insert group labels when viewing "all"
+    if (activeGroup === 'all' && !q) insertGroupLabels();
+
+    document.getElementById('no-results').style.display = visible ? 'none' : 'block';
+}
+
+function setGroup(group, btn) {
+    activeGroup = group;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+}
+
+const GROUP_ORDER = ['nosh7','websites','tools','other'];
+const GROUP_LABELS = {
+    nosh7:    '🍱  Nosh7 Projects',
+    websites: '🌐  Websites',
+    tools:    '🔧  Tools & Apps',
+    other:    '📁  Other',
+};
+
+function insertGroupLabels() {
+    const grid = document.getElementById('repos-grid');
+    const cards = [...grid.querySelectorAll('.card:not([style*="none"])')];
+    if (!cards.length) return;
+
+    let lastGroup = null;
+    cards.forEach(card => {
+        const g = card.dataset.group;
+        if (g !== lastGroup) {
+            const label = document.createElement('div');
+            label.className = 'group-label';
+            label.textContent = GROUP_LABELS[g] || '📁  Other';
+            grid.insertBefore(label, card);
+            lastGroup = g;
+        }
+    });
+}
+
+/* ─── MAIN ─────────────────────────────── */
+async function init() {
+    try {
+        const repos = await fetchRepos();
+        ALL_REPOS = repos;
+
+        /* Stats */
+        const liveCount = repos.filter(r => r.homepage).length;
+        const langs = [...new Set(repos.map(r => r.language).filter(Boolean))];
+        document.getElementById('stats').innerHTML = `
+            <div class="stat-pill"><strong>${repos.length}</strong> Projects</div>
+            <div class="stat-pill"><strong>${liveCount}</strong> Live Sites</div>
+            <div class="stat-pill"><strong>${langs.length}</strong> Languages</div>
+        `;
+
+        /* Sort: nosh7 first, then websites, tools, other */
+        const sorted = [...repos].sort((a, b) => {
+            const ga = GROUP_ORDER.indexOf(getGroup(a.name));
+            const gb = GROUP_ORDER.indexOf(getGroup(b.name));
+            if (ga !== gb) return ga - gb;
+            return new Date(b.updated_at) - new Date(a.updated_at);
+        });
+
+        /* Render cards */
+        const grid = document.getElementById('repos-grid');
+        grid.innerHTML = sorted.map((r, i) => buildCard(r, i)).join('');
+
+        /* Insert group labels */
+        insertGroupLabels();
+
+    } catch (err) {
+        document.getElementById('repos-grid').innerHTML = `
+            <div class="state-box">
+                ⚠️ Could not load projects. Check your internet and try again.<br>
+                <small style="opacity:.6;font-size:.8rem">${err.message}</small>
+            </div>`;
+    }
+}
+
+init();
+</script>
+</body>
+</html>
