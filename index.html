@@ -15,539 +15,694 @@
             color: #fff;
         }
 
-        /* ── HEADER ── */
+        /* HERO */
         .hero {
             text-align: center;
-            padding: 3.5rem 1.5rem 2rem;
+            padding: 3.5rem 1.5rem 1.5rem;
         }
-        .hero-title {
-            font-size: clamp(2rem, 5vw, 3.2rem);
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
             font-weight: 800;
             letter-spacing: -0.02em;
-            line-height: 1.1;
-            color: #fff;
             text-shadow: 0 2px 20px rgba(0,0,0,0.3);
         }
-        .hero-title span {
+        .hero h1 span {
             background: linear-gradient(90deg, #7df9ff, #a8edff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .hero-sub {
-            color: rgba(255,255,255,0.65);
-            margin-top: 0.5rem;
-            font-size: 0.95rem;
+        .hero p {
+            color: rgba(255,255,255,0.6);
+            margin-top: 0.4rem;
+            font-size: 0.9rem;
         }
-
-        /* ── STATS ── */
         .stats-row {
             display: flex;
             justify-content: center;
-            gap: 0.75rem;
+            gap: 0.7rem;
             flex-wrap: wrap;
-            margin-top: 1.75rem;
+            margin-top: 1.4rem;
         }
         .stat-pill {
             background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.18);
             border-radius: 40px;
-            padding: 0.45rem 1.1rem;
-            font-size: 0.82rem;
+            padding: 0.38rem 1rem;
+            font-size: 0.8rem;
             color: rgba(255,255,255,0.9);
-            font-weight: 500;
         }
         .stat-pill strong { color: #fff; }
 
-        /* ── SEARCH + FILTERS ── */
+        /* CONTROLS */
         .controls {
-            max-width: 700px;
-            margin: 2rem auto 0;
+            max-width: 680px;
+            margin: 1.75rem auto 0;
             padding: 0 1.5rem;
         }
-        .search-wrap {
-            position: relative;
-        }
+        .search-wrap { position: relative; }
         .search-icon {
             position: absolute;
-            left: 1rem;
+            left: 0.9rem;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(255,255,255,0.5);
-            font-size: 1rem;
             pointer-events: none;
+            font-size: 0.9rem;
         }
         .search-wrap input {
             width: 100%;
-            padding: 0.8rem 1rem 0.8rem 2.6rem;
-            border-radius: 14px;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 12px;
             border: 1.5px solid rgba(255,255,255,0.2);
             background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(12px);
             color: #fff;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
             transition: border-color 0.2s, background 0.2s;
         }
-        .search-wrap input::placeholder { color: rgba(255,255,255,0.45); }
+        .search-wrap input::placeholder { color: rgba(255,255,255,0.4); }
         .search-wrap input:focus {
             border-color: rgba(125,249,255,0.6);
             background: rgba(255,255,255,0.15);
         }
-
-        /* ── GROUP FILTER PILLS ── */
         .filters {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
-            margin-top: 1rem;
+            margin-top: 0.9rem;
             justify-content: center;
         }
         .filter-btn {
-            padding: 0.4rem 1rem;
+            padding: 0.38rem 1rem;
             border-radius: 30px;
-            border: 1.5px solid rgba(255,255,255,0.25);
-            background: rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.75);
-            font-size: 0.82rem;
+            border: 1.5px solid rgba(255,255,255,0.22);
+            background: rgba(255,255,255,0.07);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.18s;
         }
-        .filter-btn:hover {
-            background: rgba(255,255,255,0.18);
-            color: #fff;
-        }
-        .filter-btn.active {
-            background: rgba(125,249,255,0.25);
-            border-color: #7df9ff;
-            color: #7df9ff;
+        .filter-btn:hover  { background: rgba(255,255,255,0.16); color: #fff; }
+        .filter-btn.active { background: rgba(125,249,255,0.22); border-color: #7df9ff; color: #7df9ff; }
+
+        /* GRID */
+        .container { max-width: 1160px; margin: 2rem auto 4rem; padding: 0 1.5rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.4rem; }
+
+        /* GROUP DIVIDER */
+        .group-divider {
+            grid-column: 1 / -1;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            padding-bottom: 0.35rem;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            margin-top: 0.5rem;
         }
 
-        /* ── MAIN GRID ── */
-        .container {
-            max-width: 1140px;
-            margin: 2rem auto 4rem;
-            padding: 0 1.5rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-            gap: 1.5rem;
-        }
-
-        /* ── CARD ── */
+        /* CARD */
         .card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 18px;
+            background: #fff;
+            border-radius: 16px;
             overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
             display: flex;
             flex-direction: column;
-            color: #1a1a2e;
+            cursor: pointer;
+            transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
             text-decoration: none;
-            position: relative;
+            color: inherit;
         }
         .card:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 18px 48px rgba(0,0,0,0.28);
         }
         .card:active { transform: translateY(-2px); }
 
-        /* Coloured top panel */
-        .card-banner {
-            height: 110px;
+        /* Card banner */
+        .banner {
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.2rem;
+            font-size: 2.8rem;
             line-height: 1;
             position: relative;
             flex-shrink: 0;
         }
-
-        /* "No live site" ribbon */
-        .ribbon {
+        .banner-badge {
             position: absolute;
-            top: 10px;
-            right: 12px;
-            font-size: 0.62rem;
-            font-weight: 600;
-            padding: 0.2rem 0.55rem;
+            top: 9px; right: 10px;
+            font-size: 0.58rem;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
             border-radius: 20px;
-            background: rgba(0,0,0,0.2);
-            color: rgba(255,255,255,0.9);
-            letter-spacing: 0.03em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
         }
-        .ribbon.live {
-            background: rgba(255,255,255,0.25);
-            color: #fff;
-        }
+        .badge-live   { background: rgba(255,255,255,0.3); color: #fff; }
+        .badge-github { background: rgba(0,0,0,0.22); color: rgba(255,255,255,0.85); }
 
+        /* Card body */
         .card-body {
-            padding: 1.1rem 1.2rem 1.2rem;
+            padding: 1rem 1.1rem 1.1rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
-        .card-name {
-            font-size: 1rem;
+        .card-title {
+            font-size: 0.97rem;
             font-weight: 700;
             color: #111827;
-            margin-bottom: 0.45rem;
+            margin-bottom: 0.2rem;
             word-break: break-word;
         }
+        .card-url {
+            font-size: 0.67rem;
+            color: #60a5fa;
+            margin-bottom: 0.55rem;
+            word-break: break-all;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
         .card-desc {
-            font-size: 0.835rem;
+            font-size: 0.83rem;
             color: #6b7280;
             line-height: 1.55;
             flex-grow: 1;
-            margin-bottom: 1rem;
+            margin-bottom: 0.85rem;
         }
-        .card-desc.empty { font-style: italic; color: #c0c4cc; }
+        .card-desc.empty { font-style: italic; color: #d1d5db; }
 
+        /* Sub-pages */
+        .sub-section { margin-bottom: 0.85rem; }
+        .sub-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: #9ca3af;
+            margin-bottom: 0.4rem;
+        }
+        .sub-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+        }
+        .chip-page   { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
+        .chip-anchor { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+        .chip-tab    { background: #f3f4f6; color: #9ca3af; border-color: #e5e7eb; cursor: default; }
+        .chip-page:hover   { background: #dbeafe; border-color: #93c5fd; }
+        .chip-anchor:hover { background: #dcfce7; border-color: #86efac; }
+
+        /* Card footer */
         .card-footer {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 0.5rem;
+            padding-top: 0.65rem;
+            border-top: 1px solid #f3f4f6;
+            margin-top: auto;
         }
-        .updated {
-            font-size: 0.7rem;
-            color: #9ca3af;
-        }
+        .card-updated { font-size: 0.67rem; color: #d1d5db; }
         .open-btn {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
-            padding: 0.38rem 0.85rem;
+            padding: 0.35rem 0.85rem;
             border-radius: 8px;
             text-decoration: none;
-            transition: opacity 0.15s;
             white-space: nowrap;
             flex-shrink: 0;
+            transition: opacity 0.15s;
         }
-        .open-btn:hover { opacity: 0.8; }
-        .btn-live  { background: #0ea5e9; color: #fff; }
+        .open-btn:hover { opacity: 0.82; }
+        .btn-live   { background: #0077b6; color: #fff; }
         .btn-github { background: #1f2937; color: #fff; }
 
-        /* ── GROUP SECTION LABEL ── */
-        .group-label {
-            grid-column: 1 / -1;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-            padding-bottom: 0.25rem;
-            border-bottom: 1px solid rgba(255,255,255,0.12);
-            margin-top: 0.5rem;
-        }
-
-        /* ── EMPTY / LOADING ── */
-        .state-box {
+        /* Loading / error */
+        .state-msg {
+            grid-column: 1/-1;
             text-align: center;
             padding: 4rem 1rem;
-            color: rgba(255,255,255,0.6);
-            grid-column: 1/-1;
+            color: rgba(255,255,255,0.5);
         }
         .spinner {
             display: inline-block;
-            width: 38px; height: 38px;
+            width: 34px; height: 34px;
             border: 3px solid rgba(255,255,255,0.15);
             border-top-color: #7df9ff;
             border-radius: 50%;
             animation: spin 0.75s linear infinite;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .no-results {
+            grid-column: 1/-1;
             text-align: center;
             padding: 3rem;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.4);
             font-size: 0.9rem;
-            display: none;
         }
 
-        /* ── FOOTER ── */
         footer {
             text-align: center;
             padding: 1.5rem;
-            font-size: 0.77rem;
-            color: rgba(255,255,255,0.35);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.28);
         }
-        footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
-        footer a:hover { color: rgba(255,255,255,0.7); }
+        footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+        footer a:hover { color: rgba(255,255,255,0.65); }
 
-        @media (max-width: 480px) {
-            .grid { grid-template-columns: 1fr; gap: 1rem; }
-            .hero-title { font-size: 1.8rem; }
-        }
+        @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
-    <h1 class="hero-title">Things I've <span>Built</span> 🚀</h1>
-    <p class="hero-sub">Live from GitHub · Updates automatically</p>
-    <div class="stats-row" id="stats"></div>
+    <h1>Things I've <span>Built</span> 🚀</h1>
+    <p>Live from GitHub &nbsp;·&nbsp; Updates automatically on every visit</p>
+    <div class="stats-row" id="stats-row">
+        <div class="stat-pill">Loading…</div>
+    </div>
 </div>
 
-<!-- CONTROLS -->
 <div class="controls">
     <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input id="search" type="text" placeholder="Search projects…" oninput="applyFilters()" />
+        <input id="search-input" type="text" placeholder="Search projects…" />
     </div>
-    <div class="filters" id="filters">
-        <button class="filter-btn active" data-group="all" onclick="setGroup('all', this)">All</button>
-        <button class="filter-btn" data-group="nosh7"    onclick="setGroup('nosh7', this)">🍱 Nosh7</button>
-        <button class="filter-btn" data-group="websites" onclick="setGroup('websites', this)">🌐 Websites</button>
-        <button class="filter-btn" data-group="tools"    onclick="setGroup('tools', this)">🔧 Tools</button>
+    <div class="filters" id="filter-bar">
+        <button class="filter-btn active" data-group="all">All</button>
+        <button class="filter-btn" data-group="nosh7">🍱 Nosh7</button>
+        <button class="filter-btn" data-group="websites">🌐 Websites</button>
+        <button class="filter-btn" data-group="tools">🔧 Tools</button>
     </div>
 </div>
 
-<!-- MAIN GRID -->
 <div class="container">
-    <div id="repos-grid" class="grid">
-        <div class="state-box">
-            <div class="spinner"></div><br>Loading your projects…
+    <div class="grid" id="main-grid">
+        <div class="state-msg">
+            <div class="spinner"></div>
+            <div>Fetching your projects from GitHub…</div>
         </div>
     </div>
-    <div id="no-results" class="no-results">No projects match your search.</div>
 </div>
 
 <footer>
-    ✦ Auto-updated live from GitHub ·
+    ✦ Auto-updated live from GitHub &nbsp;·&nbsp;
     <a href="https://github.com/hii2023" target="_blank">github.com/hii2023</a>
 </footer>
 
 <script>
-/* ─── CONFIG ─────────────────────────────── */
-const USERNAME = 'hii2023';
+/* ═══════════════════════════════════════════════
+   SITE DATA  — live URLs + sub-pages per repo
+   New repos from the API show up automatically;
+   add their sub-page data here when ready.
+═══════════════════════════════════════════════ */
+const SITE = {
+    'item': {
+        url:   'https://hii2023.github.io/item',
+        title: 'NOSH7 Juice Launch Tracker',
+        pages: [
+            { label: 'Menu & Pricing',       href: null, kind: 'tab' },
+            { label: 'Launch Checklist',     href: null, kind: 'tab' },
+            { label: 'Competitors Insights', href: null, kind: 'tab' },
+        ]
+    },
+    'BusinessFirst': {
+        url:   'https://hii2023.github.io/BusinessFirst',
+        title: 'Business First — Digital Business',
+        pages: [
+            { label: 'Services',     href: 'https://hii2023.github.io/BusinessFirst#services',     kind: 'anchor' },
+            { label: 'Pricing',      href: 'https://hii2023.github.io/BusinessFirst#pricing',      kind: 'anchor' },
+            { label: 'Testimonials', href: 'https://hii2023.github.io/BusinessFirst#testimonials', kind: 'anchor' },
+            { label: 'Contact',      href: 'https://hii2023.github.io/BusinessFirst#contact',      kind: 'anchor' },
+        ]
+    },
+    'leaqualify': {
+        url:   'https://hii2023.github.io/leaqualify',
+        title: 'NOSH7 Lead Qualifier Tool',
+        pages: [
+            { label: '🎯 Qualify',   href: null, kind: 'tab' },
+            { label: '💬 DM Script', href: null, kind: 'tab' },
+            { label: '🚩 Red Flags', href: null, kind: 'tab' },
+        ]
+    },
+    'nosh7-outreach': {
+        url:   'https://hii2023.github.io/nosh7-outreach/',
+        title: 'NOSH7 Member Outreach Manager',
+        pages: []
+    },
+    'SAPNA': {
+        url:   'https://hii2023.github.io/SAPNA',
+        title: "Sapna's Art Studio",
+        pages: []
+    },
+    'growth-hub': {
+        url:   'https://hii2023.github.io/growth-hub',
+        title: 'The Growth Hub — Master Learning Center',
+        pages: [
+            { label: '🤝 Negotiation Lab', href: 'https://hii2023.github.io/growth-hub/negotiations/index.html', kind: 'page' },
+            { label: '💰 Sales Vault',     href: 'https://hii2023.github.io/growth-hub/sales/index.html',       kind: 'page' },
+            { label: '☮️ Harmony Center',  href: 'https://hii2023.github.io/growth-hub/conflict/index.html',    kind: 'page' },
+            { label: '🧠 Mind Reader',     href: 'https://hii2023.github.io/growth-hub/psychology/index.html',  kind: 'page' },
+            { label: '🤖 AI & Future Biz', href: 'https://hii2023.github.io/growth-hub/ai-trends/index.html',  kind: 'page' },
+        ]
+    },
+    'invitation': {
+        url:   'https://heenaazaz.in/',
+        title: 'Daawat — Heena & Azaz Wedding Invite',
+        pages: []
+    },
+    'nosh7-whatsapp-crm': {
+        url:   'https://hii2023.github.io/nosh7-whatsapp-crm',
+        title: 'Nosh7 Mumbai — Fresh Salad Subscriptions',
+        pages: [
+            { label: 'Plans',        href: 'https://hii2023.github.io/nosh7-whatsapp-crm#plans',   kind: 'anchor' },
+            { label: 'How It Works', href: 'https://hii2023.github.io/nosh7-whatsapp-crm#how',     kind: 'anchor' },
+            { label: 'Menu',         href: 'https://hii2023.github.io/nosh7-whatsapp-crm#menu',    kind: 'anchor' },
+            { label: 'Reviews',      href: 'https://hii2023.github.io/nosh7-whatsapp-crm#reviews', kind: 'anchor' },
+            { label: 'FAQ',          href: 'https://hii2023.github.io/nosh7-whatsapp-crm#faq',     kind: 'anchor' },
+        ]
+    },
+    'landing-page-nosh7': {
+        url:   'https://partners.nosh7.in/',
+        title: 'Nosh7 — Partner With Us',
+        pages: [
+            { label: 'Benefits',     href: 'https://partners.nosh7.in/#benefits',      kind: 'anchor' },
+            { label: 'How It Works', href: 'https://partners.nosh7.in/#how-it-works',  kind: 'anchor' },
+            { label: 'Custom Plans', href: 'https://partners.nosh7.in/#custom-plans',  kind: 'anchor' },
+            { label: 'Testimonials', href: 'https://partners.nosh7.in/#testimonials',  kind: 'anchor' },
+            { label: 'Partner Form', href: 'https://partners.nosh7.in/#partner-form',  kind: 'anchor' },
+        ]
+    },
+    'nosh7-crm': {
+        url:   'https://hii2023.github.io/nosh7-crm',
+        title: 'NOSH7 CRM Dashboard',
+        pages: [
+            { label: '📊 Dashboard',   href: null, kind: 'tab' },
+            { label: '👥 Leads',       href: null, kind: 'tab' },
+            { label: '💬 Templates',   href: null, kind: 'tab' },
+            { label: '🗂️ Categories',  href: null, kind: 'tab' },
+            { label: '📈 Analytics',   href: null, kind: 'tab' },
+        ]
+    },
+    'nosh7-in': {
+        url:   'https://nosh7.in/',
+        title: 'NOSH7 — Fresh Salad Delivery, Ahmedabad',
+        pages: [
+            { label: 'Subscriptions', href: 'https://nosh7.in/subscription.html',        kind: 'page' },
+            { label: 'Health Blog',   href: 'https://nosh7.in/blog.html',                kind: 'page' },
+            { label: 'Ahmedabad',     href: 'https://nosh7.in/ahmedabad.html',           kind: 'page' },
+            { label: '📋 Full Menu',  href: 'https://nosh7.in/assets/nosh7-menu.jpg',   kind: 'page' },
+        ]
+    },
+    'Test-Writing-Tool': {
+        url:   'https://hii2023.github.io/Test-Writing-Tool',
+        title: 'NOSH7 Sales Engine',
+        pages: []
+    },
+    'nosh7in': {
+        url:   'https://hii2023.github.io/nosh7in',
+        title: 'NOSH7 Ahmedabad — Salad Subscription',
+        pages: [
+            { label: 'Subscriptions', href: 'https://hii2023.github.io/nosh7in/subscription.html', kind: 'page' },
+            { label: 'Health Blog',   href: 'https://hii2023.github.io/nosh7in/blog.html',         kind: 'page' },
+            { label: 'Ahmedabad',     href: 'https://hii2023.github.io/nosh7in/ahmedabad.html',    kind: 'page' },
+        ]
+    },
+};
 
-/* Banner colours cycling through ocean palette */
-const BANNER_COLORS = [
+/* ── SMART FALLBACK DESCRIPTIONS ── */
+const DESC = {
+    'nosh7-whatsapp-crm': 'WhatsApp CRM system for Nosh7 subscription management',
+    'nosh7-crm':          'Customer relationship management dashboard for Nosh7',
+    'nosh7-outreach':     'Outreach and marketing automation tool for Nosh7',
+    'landing-page-nosh7': 'Partner landing page for Nosh7 nutritionists & dietitians',
+    'nosh7-in':           'Main Nosh7 website — fresh salad delivery, Ahmedabad',
+    'nosh7in':            'Nosh7 Ahmedabad — salad subscription & health blog',
+    'growth-hub':         '5-track learning hub — sales, negotiation, AI & more',
+    'invitation':         'Digital wedding invitation — Heena & Azaz',
+    'leaqualify':         'Lead qualification & scoring tool for Nosh7 sales',
+    'BusinessFirst':      'Digital business starter page with services & pricing',
+    'item':               'Juice launch tracker — pricing, checklist & competitors',
+    'Test-Writing-Tool':  'Sales message generator for WhatsApp, email & calls',
+    'SAPNA':              "Sapna's Art Studio — handcrafted with love",
+};
+
+/* ── BANNER GRADIENTS ── */
+const BANNERS = [
     'linear-gradient(135deg,#0077b6,#00b4d8)',
     'linear-gradient(135deg,#023e8a,#0096c7)',
     'linear-gradient(135deg,#0089a7,#48cae4)',
     'linear-gradient(135deg,#005f73,#0a9396)',
     'linear-gradient(135deg,#03045e,#0077b6)',
     'linear-gradient(135deg,#0582ca,#06d6a0)',
-    'linear-gradient(135deg,#00b4d8,#90e0ef)',
+    'linear-gradient(135deg,#00b4d8,#7fc8f8)',
     'linear-gradient(135deg,#1d3557,#457b9d)',
 ];
 
-/* Emoji icon mapping */
-const ICON_MAP = [
-    ['whatsapp','💬'], ['crm','📊'], ['nosh7','🍱'], ['food','🍽️'],
-    ['landing','🌐'], ['outreach','📣'], ['growth','📈'], ['lead','🎯'],
-    ['invitation','💌'], ['invite','💌'], ['business','💼'],
-    ['item','📦'], ['test','🧪'], ['tool','🔧'], ['sapna','✨'],
+/* ── EMOJI ICONS ── */
+const ICONS = [
+    ['whatsapp','💬'],['crm','📊'],['nosh7','🍱'],['food','🍽️'],
+    ['partner','🤝'],['outreach','📣'],['growth','📈'],['lead','🎯'],
+    ['invitation','💌'],['business','💼'],['item','📦'],
+    ['test','🧪'],['tool','🔧'],['sapna','✨'],['landing','🌐'],
 ];
-function getIcon(name) {
+function icon(name) {
     const l = name.toLowerCase();
-    for (const [k, i] of ICON_MAP) if (l.includes(k)) return i;
+    for (const [k, e] of ICONS) if (l.includes(k)) return e;
     return '📁';
 }
 
-/* Group classification */
-const GROUPS = {
-    nosh7:    n => n.toLowerCase().includes('nosh7') || n.toLowerCase().includes('nosh'),
-    tools:    n => ['sapna','test-writing-tool','growth-hub'].includes(n.toLowerCase()),
-    websites: n => ['item','businessfirst','leaqualify','invitation','landing-page-nosh7'].includes(n.toLowerCase()),
-};
-function getGroup(name) {
-    for (const [g, fn] of Object.entries(GROUPS)) if (fn(name)) return g;
+/* ── GROUPING ── */
+const GROUP_ORDER = ['nosh7','websites','tools','other'];
+const GROUP_NAME  = { nosh7:'🍱  Nosh7 Projects', websites:'🌐  Websites', tools:'🔧  Tools & Apps', other:'📁  Other' };
+
+function group(name) {
+    const l = name.toLowerCase();
+    if (l.includes('nosh'))   return 'nosh7';
+    if (['sapna','test-writing-tool','growth-hub','leaqualify'].includes(l)) return 'tools';
+    if (['item','businessfirst','invitation'].includes(l)) return 'websites';
     return 'other';
 }
 
-/* Smart descriptions when GitHub has none */
-const SMART_DESCS = {
-    'nosh7-whatsapp-crm':  'WhatsApp CRM system for Nosh7 subscription management',
-    'nosh7-crm':           'Customer relationship management dashboard for Nosh7',
-    'nosh7-outreach':      'Outreach and marketing automation for Nosh7',
-    'landing-page-nosh7':  'Landing page for Nosh7 — built with TypeScript',
-    'nosh7-in':            'Nosh7 India web module',
-    'nosh7in':             'Additional Nosh7 website module',
-    'growth-hub':          'Growth tracking and analytics hub',
-    'invitation':          'Digital invitation page',
-    'leaqualify':          'Lead qualification tool',
-    'BusinessFirst':       'Business-focused web project',
-    'item':                'Item management web app',
-    'Test-Writing-Tool':   'Writing and test generation tool',
-    'SAPNA':               'SAPNA — JavaScript-powered project',
-};
-function getDesc(repo) {
-    if (repo.description) return { text: repo.description, empty: false };
-    const s = SMART_DESCS[repo.name];
-    if (s) return { text: s, empty: false };
-    return { text: 'No description yet — add one on GitHub!', empty: true };
-}
-
-function timeAgo(d) {
+/* ── TIME AGO ── */
+function ago(d) {
     const s = Math.floor((Date.now() - new Date(d)) / 1000);
     if (s < 60)      return 'just now';
-    if (s < 3600)    return `${Math.floor(s/60)}m ago`;
-    if (s < 86400)   return `${Math.floor(s/3600)}h ago`;
-    if (s < 2592000) return `${Math.floor(s/86400)}d ago`;
-    return new Date(d).toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+    if (s < 3600)    return Math.floor(s/60)   + 'm ago';
+    if (s < 86400)   return Math.floor(s/3600) + 'h ago';
+    if (s < 2592000) return Math.floor(s/86400)+ 'd ago';
+    return new Date(d).toLocaleDateString('en-IN', { month:'short', year:'numeric' });
 }
 
-/* ─── STATE ─────────────────────────────── */
-let ALL_REPOS  = [];
-let activeGroup = 'all';
+/* ── BUILD ONE CARD ── */
+function card(repo, bannerIdx) {
+    const s       = SITE[repo.name]  || {};
+    const siteUrl = s.url || repo.homepage || null;   // website URL first, then GitHub homepage
+    const openUrl = siteUrl || repo.html_url;          // final fallback = GitHub repo page
+    const isLive  = !!siteUrl;
+    const pages   = s.pages || [];
+    const title   = s.title || repo.name;
+    const desc    = repo.description || DESC[repo.name] || 'No description yet.';
+    const hasDesc = !!(repo.description || DESC[repo.name]);
+    const dispUrl = openUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const bg      = BANNERS[bannerIdx % BANNERS.length];
 
-/* ─── FETCH ─────────────────────────────── */
-async function fetchRepos() {
+    /* Sub-page chips */
+    let subSection = '';
+    if (pages.length > 0) {
+        const kindLabel = pages.some(p => p.kind === 'page')   ? 'Sub-pages'
+                        : pages.some(p => p.kind === 'anchor') ? 'Sections on this page'
+                        : 'Views inside this app';
+
+        const chips = pages.map(p => {
+            if (p.kind === 'tab' || !p.href) {
+                return '<span class="chip chip-tab">' + p.label + '</span>';
+            }
+            const chipClass = p.kind === 'page' ? 'chip chip-page' : 'chip chip-anchor';
+            const prefix    = p.kind === 'page' ? '↗ ' : '# ';
+            return '<a class="' + chipClass + '" href="' + p.href + '" target="_blank">' + prefix + p.label + '</a>';
+        }).join('');
+
+        subSection = '<div class="sub-section"><div class="sub-label">' + kindLabel + '</div><div class="sub-chips">' + chips + '</div></div>';
+    }
+
+    return (
+        '<div class="card" data-group="' + group(repo.name) + '" ' +
+             'data-search="' + (title + ' ' + repo.name + ' ' + desc).toLowerCase().replace(/"/g, '') + '" ' +
+             'data-url="' + openUrl + '">' +
+            '<div class="banner" style="background:' + bg + '">' +
+                icon(repo.name) +
+                '<span class="banner-badge ' + (isLive ? 'badge-live' : 'badge-github') + '">' +
+                    (isLive ? '● Live' : 'GitHub') +
+                '</span>' +
+            '</div>' +
+            '<div class="card-body">' +
+                '<div class="card-title">' + title + '</div>' +
+                '<div class="card-url">' + dispUrl + '</div>' +
+                '<div class="card-desc' + (hasDesc ? '' : ' empty') + '">' + desc + '</div>' +
+                subSection +
+                '<div class="card-footer">' +
+                    '<span class="card-updated">Updated ' + ago(repo.updated_at) + '</span>' +
+                    '<a class="open-btn ' + (isLive ? 'btn-live' : 'btn-github') + '" ' +
+                       'href="' + openUrl + '" target="_blank">' +
+                        (isLive ? '🔗 Open Site' : 'GitHub →') +
+                    '</a>' +
+                '</div>' +
+            '</div>' +
+        '</div>'
+    );
+}
+
+/* ── RENDER GRID ── */
+function renderGrid(repos) {
+    const grid = document.getElementById('main-grid');
+
+    /* Sort by group order then recency */
+    const sorted = [...repos].sort((a, b) => {
+        const diff = GROUP_ORDER.indexOf(group(a.name)) - GROUP_ORDER.indexOf(group(b.name));
+        return diff !== 0 ? diff : new Date(b.updated_at) - new Date(a.updated_at);
+    });
+
+    /* Build HTML for cards with group dividers */
+    let html = '';
+    let lastGroup = null;
+    sorted.forEach((repo, i) => {
+        const g = group(repo.name);
+        if (g !== lastGroup) {
+            html += '<div class="group-divider">' + GROUP_NAME[g] + '</div>';
+            lastGroup = g;
+        }
+        html += card(repo, i);
+    });
+
+    grid.innerHTML = html;
+
+    /* Click handler — card click opens the site URL */
+    grid.querySelectorAll('.card').forEach(el => {
+        el.addEventListener('click', function(e) {
+            /* If user clicked a chip link or open-btn, let the link handle it */
+            if (e.target.closest('a')) return;
+            window.open(el.dataset.url, '_blank');
+        });
+    });
+}
+
+/* ── FILTER ── */
+let activeGroup = 'all';
+let allCards    = [];
+
+function applyFilter() {
+    const q   = document.getElementById('search-input').value.toLowerCase().trim();
+    const grid = document.getElementById('main-grid');
+    let visible = 0;
+
+    grid.querySelectorAll('.card').forEach(el => {
+        const groupOk  = activeGroup === 'all' || el.dataset.group === activeGroup;
+        const searchOk = !q || el.dataset.search.includes(q);
+        const show     = groupOk && searchOk;
+        el.style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    /* Show/hide group dividers */
+    grid.querySelectorAll('.group-divider').forEach(div => {
+        /* Show divider if any following card (before next divider) is visible */
+        let next = div.nextElementSibling;
+        let anyVisible = false;
+        while (next && !next.classList.contains('group-divider')) {
+            if (next.style.display !== 'none') { anyVisible = true; break; }
+            next = next.nextElementSibling;
+        }
+        div.style.display = anyVisible ? '' : 'none';
+    });
+
+    /* No results message */
+    let noRes = grid.querySelector('.no-results');
+    if (!noRes) {
+        noRes = document.createElement('div');
+        noRes.className = 'no-results';
+        noRes.textContent = 'No projects match your search.';
+        grid.appendChild(noRes);
+    }
+    noRes.style.display = visible ? 'none' : '';
+}
+
+/* Wire up controls */
+document.getElementById('search-input').addEventListener('input', applyFilter);
+
+document.getElementById('filter-bar').addEventListener('click', function(e) {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    activeGroup = btn.dataset.group;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilter();
+});
+
+/* ── FETCH FROM GITHUB ── */
+async function loadRepos() {
     let page = 1, all = [];
     while (true) {
-        const r = await fetch(`https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated&page=${page}`);
-        const repos = await r.json();
-        if (!Array.isArray(repos) || !repos.length) break;
-        all = all.concat(repos);
-        if (repos.length < 100) break;
+        const res   = await fetch('https://api.github.com/users/hii2023/repos?per_page=100&sort=updated&page=' + page);
+        if (!res.ok) throw new Error('GitHub API error ' + res.status);
+        const batch = await res.json();
+        if (!Array.isArray(batch) || batch.length === 0) break;
+        all = all.concat(batch);
+        if (batch.length < 100) break;
         page++;
     }
     return all;
 }
 
-/* ─── RENDER ─────────────────────────────── */
-function buildCard(repo, colorIdx) {
-    const desc   = getDesc(repo);
-    const icon   = getIcon(repo.name);
-    const url    = repo.homepage || repo.html_url;        // primary URL = live site if available
-    const isLive = !!repo.homepage;
-    const banner = BANNER_COLORS[colorIdx % BANNER_COLORS.length];
-    const btnClass = isLive ? 'btn-live' : 'btn-github';
-    const btnLabel = isLive ? '🔗 Open Site' : 'GitHub →';
-
-    return `
-        <div class="card"
-             data-group="${getGroup(repo.name)}"
-             data-search="${repo.name.toLowerCase()} ${(repo.description||'').toLowerCase()}"
-             onclick="window.open('${url}','_blank')">
-
-            <div class="card-banner" style="background:${banner}">
-                ${icon}
-                <span class="ribbon ${isLive ? 'live' : ''}">${isLive ? '● Live' : 'GitHub'}</span>
-            </div>
-
-            <div class="card-body">
-                <div class="card-name">${repo.name}</div>
-                <p class="card-desc ${desc.empty ? 'empty' : ''}">${desc.text}</p>
-                <div class="card-footer">
-                    <span class="updated">Updated ${timeAgo(repo.updated_at)}</span>
-                    <a class="open-btn ${btnClass}"
-                       href="${url}"
-                       target="_blank"
-                       onclick="event.stopPropagation()">${btnLabel}</a>
-                </div>
-            </div>
-        </div>`;
-}
-
-/* ─── FILTER ─────────────────────────────── */
-function applyFilters() {
-    const q = document.getElementById('search').value.toLowerCase().trim();
-    const cards = document.querySelectorAll('.card');
-    const labels = document.querySelectorAll('.group-label');
-    let visible = 0;
-
-    labels.forEach(l => l.remove()); // remove old labels before re-inserting
-
-    cards.forEach(c => {
-        const groupMatch = activeGroup === 'all' || c.dataset.group === activeGroup;
-        const searchMatch = !q || c.dataset.search.includes(q);
-        const show = groupMatch && searchMatch;
-        c.style.display = show ? '' : 'none';
-        if (show) visible++;
-    });
-
-    // Re-insert group labels when viewing "all"
-    if (activeGroup === 'all' && !q) insertGroupLabels();
-
-    document.getElementById('no-results').style.display = visible ? 'none' : 'block';
-}
-
-function setGroup(group, btn) {
-    activeGroup = group;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    applyFilters();
-}
-
-const GROUP_ORDER = ['nosh7','websites','tools','other'];
-const GROUP_LABELS = {
-    nosh7:    '🍱  Nosh7 Projects',
-    websites: '🌐  Websites',
-    tools:    '🔧  Tools & Apps',
-    other:    '📁  Other',
-};
-
-function insertGroupLabels() {
-    const grid = document.getElementById('repos-grid');
-    const cards = [...grid.querySelectorAll('.card:not([style*="none"])')];
-    if (!cards.length) return;
-
-    let lastGroup = null;
-    cards.forEach(card => {
-        const g = card.dataset.group;
-        if (g !== lastGroup) {
-            const label = document.createElement('div');
-            label.className = 'group-label';
-            label.textContent = GROUP_LABELS[g] || '📁  Other';
-            grid.insertBefore(label, card);
-            lastGroup = g;
-        }
-    });
-}
-
-/* ─── MAIN ─────────────────────────────── */
-async function init() {
+/* ── MAIN ── */
+(async function () {
     try {
-        const repos = await fetchRepos();
-        ALL_REPOS = repos;
+        const repos = await loadRepos();
 
-        /* Stats */
-        const liveCount = repos.filter(r => r.homepage).length;
-        const langs = [...new Set(repos.map(r => r.language).filter(Boolean))];
-        document.getElementById('stats').innerHTML = `
-            <div class="stat-pill"><strong>${repos.length}</strong> Projects</div>
-            <div class="stat-pill"><strong>${liveCount}</strong> Live Sites</div>
-            <div class="stat-pill"><strong>${langs.length}</strong> Languages</div>
-        `;
+        /* Stats bar */
+        const liveCount  = repos.filter(r => SITE[r.name]?.url || r.homepage).length;
+        const subCount   = Object.values(SITE).reduce((n, s) => n + (s.pages||[]).filter(p => p.href).length, 0);
+        const langs      = [...new Set(repos.map(r => r.language).filter(Boolean))];
+        document.getElementById('stats-row').innerHTML =
+            '<div class="stat-pill"><strong>' + repos.length + '</strong> Projects</div>' +
+            '<div class="stat-pill"><strong>' + liveCount   + '</strong> Live Sites</div>' +
+            '<div class="stat-pill"><strong>' + subCount    + '</strong> Sub-pages</div>' +
+            '<div class="stat-pill"><strong>' + langs.length + '</strong> Languages</div>';
 
-        /* Sort: nosh7 first, then websites, tools, other */
-        const sorted = [...repos].sort((a, b) => {
-            const ga = GROUP_ORDER.indexOf(getGroup(a.name));
-            const gb = GROUP_ORDER.indexOf(getGroup(b.name));
-            if (ga !== gb) return ga - gb;
-            return new Date(b.updated_at) - new Date(a.updated_at);
-        });
-
-        /* Render cards */
-        const grid = document.getElementById('repos-grid');
-        grid.innerHTML = sorted.map((r, i) => buildCard(r, i)).join('');
-
-        /* Insert group labels */
-        insertGroupLabels();
+        renderGrid(repos);
 
     } catch (err) {
-        document.getElementById('repos-grid').innerHTML = `
-            <div class="state-box">
-                ⚠️ Could not load projects. Check your internet and try again.<br>
-                <small style="opacity:.6;font-size:.8rem">${err.message}</small>
-            </div>`;
-    }
-}
+        /* If API fails, still show all sites from SITE_DATA */
+        const fallback = Object.entries(SITE).map(([name, s]) => ({
+            name,
+            description: null,
+            homepage: s.url,
+            html_url: 'https://github.com/hii2023/' + name,
+            updated_at: new Date().toISOString(),
+            language: null,
+        }));
 
-init();
+        document.getElementById('stats-row').innerHTML =
+            '<div class="stat-pill">⚠️ GitHub offline — showing cached data</div>';
+
+        renderGrid(fallback);
+    }
+})();
 </script>
 </body>
 </html>
