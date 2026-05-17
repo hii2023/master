@@ -479,13 +479,14 @@ function ago(d) {
     return new Date(d).toLocaleDateString('en-IN',{month:'short',year:'numeric'});
 }
 
-function sentenceCaseName(name='') {
+const DEFAULT_LANGUAGE = 'Unknown';
+function titleCaseName(name='') {
     return name.replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim()
         .replace(/\b\w/g, c => c.toUpperCase());
 }
 function generateDescription(repo) {
-    const pretty = sentenceCaseName(repo.name);
-    const language = repo.language || 'Unknown';
+    const pretty = titleCaseName(repo.name);
+    const language = repo.language || DEFAULT_LANGUAGE;
     const lang = ` built with ${language}`;
     if (repo.fork) return `Forked repository: ${pretty}${lang}.`;
     if (repo.homepage) return `Live project: ${pretty}${lang}.`;
@@ -504,7 +505,7 @@ function buildRepoCard(repo, bannerIdx) {
     const hasDesc  = !!descTxt;
     const dispUrl  = openUrl.replace(/^https?:\/\//,'').replace(/\/$/,'');
     const bg       = BANNERS[bannerIdx % BANNERS.length];
-    const language = repo.language || 'Unknown';
+    const language = repo.language || DEFAULT_LANGUAGE;
 
     let subSection = '';
     if (pages.length) {
