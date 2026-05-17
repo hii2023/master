@@ -108,6 +108,11 @@
         .card-url   { font-size:.66rem; color:#60a5fa; margin-bottom:.5rem; word-break:break-all; font-family:'SF Mono','Fira Code',monospace; }
         .card-desc  { font-size:.82rem; color:#6b7280; line-height:1.55; flex-grow:1; margin-bottom:.8rem; }
         .card-desc.empty { font-style:italic; color:#d1d5db; }
+        .meta-row { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.75rem; }
+        .meta-pill {
+            font-size:.64rem; font-weight:600; letter-spacing:.01em;
+            padding:.2rem .5rem; border-radius:999px; border:1px solid #e5e7eb; color:#6b7280; background:#f9fafb;
+        }
 
         /* Sub-pages */
         .sub-section { margin-bottom:.8rem; }
@@ -223,6 +228,7 @@
         <button class="filter-btn" data-group="nosh7">🍱 Nosh7</button>
         <button class="filter-btn" data-group="websites">🌐 Websites</button>
         <button class="filter-btn" data-group="tools">🔧 Tools</button>
+        <button class="filter-btn" data-group="other">📁 Other</button>
         <button class="filter-btn" data-group="sources">🔗 Other Sources</button>
     </div>
 </div>
@@ -473,6 +479,29 @@ function ago(d) {
     return new Date(d).toLocaleDateString('en-IN',{month:'short',year:'numeric'});
 }
 
+const DEFAULT_LANGUAGE = 'Unknown';
+function titleCaseName(name='') {
+    const value = String(name || '');
+    return value.replace(/[-_]+/g,' ').split(' ').filter(Boolean)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+}
+function escapeHtml(value='') {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+function generateDescription(repo) {
+    const pretty = titleCaseName(repo.name);
+    const langClause = repo.language ? ` built with ${repo.language}` : '';
+    if (repo.fork) return `Forked repository: ${pretty}${langClause}.`;
+    if (repo.homepage) return `Live project: ${pretty}${langClause}.`;
+    return `${pretty} repository${langClause} on GitHub.`;
+}
+
 /* ── BUILD GITHUB REPO CARD ── */
 function buildRepoCard(repo, bannerIdx) {
     const s        = SITE[repo.name] || {};
@@ -481,10 +510,17 @@ function buildRepoCard(repo, bannerIdx) {
     const isLive   = !!siteUrl;
     const pages    = s.pages || [];
     const title    = s.title || repo.name;
-    const descTxt  = repo.description || DESC[repo.name] || '';
+    const descTxt  = (repo.description || DESC[repo.name] || '').trim() || generateDescription(repo);
     const hasDesc  = !!descTxt;
     const dispUrl  = openUrl.replace(/^https?:\/\//,'').replace(/\/$/,'');
     const bg       = BANNERS[bannerIdx % BANNERS.length];
+    const language = repo.language || DEFAULT_LANGUAGE;
+    const safeTitle = escapeHtml(title);
+    const safeDispUrl = escapeHtml(dispUrl);
+    const safeDesc = escapeHtml(descTxt);
+    const safeLanguage = escapeHtml(language);
+    const safeDataSearch = escapeHtml([title, repo.name, descTxt].join(' ').toLowerCase());
+    const safeDataUrl = escapeHtml(openUrl);
 
     let subSection = '';
     if (pages.length) {
@@ -494,30 +530,34 @@ function buildRepoCard(repo, bannerIdx) {
         const kindLabel = hasReal ? 'Pages in this repo' : hasAnchor ? 'Sections on this page' : 'Views inside this app';
 
         const chips = pages.map(p => {
-            if (p.kind==='tab'||!p.href) return '<span class="chip chip-tab">'+p.label+'</span>';
+            if (p.kind==='tab'||!p.href) return '<span class="chip chip-tab">'+escapeHtml(p.label)+'</span>';
             const cls = p.kind==='admin'?'chip chip-admin': p.kind==='anchor'?'chip chip-anchor':'chip chip-page';
             const pfx = p.kind==='admin'?'🔒 ': p.kind==='page'?'↗ ':'# ';
-            return '<a class="'+cls+'" href="'+p.href+'" target="_blank">'+pfx+p.label+'</a>';
+            return '<a class="'+cls+'" href="'+escapeHtml(p.href)+'" target="_blank">'+pfx+escapeHtml(p.label)+'</a>';
         }).join('');
-        subSection = '<div class="sub-section"><div class="sub-label">'+kindLabel+'</div><div class="sub-chips">'+chips+'</div></div>';
+        subSection = '<div class="sub-section"><div class="sub-label">'+escapeHtml(kindLabel)+'</div><div class="sub-chips">'+chips+'</div></div>';
     }
 
     return (
         '<div class="card" data-group="'+getGroup(repo.name)+'" '+
-             'data-search="'+(title+' '+repo.name+' '+descTxt).toLowerCase().replace(/"/g,'')+'" '+
-             'data-url="'+openUrl+'">' +
+             'data-search="'+safeDataSearch+'" '+
+             'data-url="'+safeDataUrl+'">' +
             '<div class="banner" style="background:'+bg+'">'+
                 '<span class="banner-emoji">'+getIcon(repo.name)+'</span>'+
                 '<span class="banner-badge '+(isLive?'badge-live':'badge-github')+'">'+(isLive?'● Live':'GitHub')+'</span>'+
             '</div>'+
             '<div class="card-body">'+
-                '<div class="card-title">'+title+'</div>'+
-                '<div class="card-url">'+dispUrl+'</div>'+
-                '<div class="card-desc'+(hasDesc?'':' empty')+'">'+(hasDesc?descTxt:'No description yet.')+'</div>'+
+                '<div class="card-title">'+safeTitle+'</div>'+
+                '<div class="card-url">'+safeDispUrl+'</div>'+
+                '<div class="card-desc'+(hasDesc?'':' empty')+'">'+(hasDesc?safeDesc:'No description yet.')+'</div>'+
+                '<div class="meta-row">'+
+                    '<span class="meta-pill">🧩 '+safeLanguage+'</span>'+
+                    '<span class="meta-pill">'+(repo.fork?'Fork':'Original')+'</span>'+
+                '</div>'+
                 subSection+
                 '<div class="card-footer">'+
                     '<span class="card-updated">Updated '+ago(repo.updated_at)+'</span>'+
-                    '<a class="open-btn '+(isLive?'btn-live':'btn-github')+'" href="'+openUrl+'" target="_blank">'+(isLive?'🔗 Open Site':'GitHub →')+'</a>'+
+                    '<a class="open-btn '+(isLive?'btn-live':'btn-github')+'" href="'+safeDataUrl+'" target="_blank">'+(isLive?'🔗 Open Site':'GitHub →')+'</a>'+
                 '</div>'+
             '</div>'+
         '</div>'
@@ -533,10 +573,16 @@ function buildSourceCard(src, bannerIdx, deletable) {
         ? 'background-image:url('+src.image+');background-size:cover;background-position:center;'
         : 'background:'+bg+';';
     const subpages = src.subpages || [];
+    const safeName = escapeHtml(src.name);
+    const safeDesc = escapeHtml(src.description || '');
+    const safeDispUrl = escapeHtml(dispUrl);
+    const safeOpenUrl = escapeHtml(openUrl);
+    const safeDataSearch = escapeHtml([src.name, (src.description || '')].join(' ').toLowerCase());
+    const sourceEmoji = src.image ? '' : escapeHtml(src.icon || getIcon(src.name));
     let subSection = '';
     if (subpages.length) {
         const chips = subpages.map(p =>
-            '<a class="chip chip-page" href="'+p.url+'" target="_blank">↗ '+p.name+'</a>'
+            '<a class="chip chip-page" href="'+escapeHtml(p.url)+'" target="_blank">↗ '+escapeHtml(p.name)+'</a>'
         ).join('');
         subSection = '<div class="sub-section"><div class="sub-label">Other links</div><div class="sub-chips">'+chips+'</div></div>';
     }
@@ -546,21 +592,21 @@ function buildSourceCard(src, bannerIdx, deletable) {
 
     return (
         '<div class="card" data-group="sources" '+
-             'data-search="'+(src.name+' '+(src.description||'')).toLowerCase().replace(/"/g,'')+'" '+
-             'data-url="'+openUrl+'" data-source-id="'+src.id+'">' +
+             'data-search="'+safeDataSearch+'" '+
+             'data-url="'+safeOpenUrl+'" data-source-id="'+src.id+'">' +
             deleteBtn+
             '<div class="banner" style="'+bannerStyle+'">'+
-                '<span class="banner-emoji">'+(src.image?'':'(src.icon||getIcon(src.name))')+'</span>'+
+                '<span class="banner-emoji">'+sourceEmoji+'</span>'+
                 '<span class="banner-badge badge-source">External</span>'+
             '</div>'+
             '<div class="card-body">'+
-                '<div class="card-title">'+src.name+'</div>'+
-                '<div class="card-url">'+dispUrl+'</div>'+
-                '<div class="card-desc'+(src.description?'':' empty')+'">'+(src.description||'No description.')+'</div>'+
+                '<div class="card-title">'+safeName+'</div>'+
+                '<div class="card-url">'+safeDispUrl+'</div>'+
+                '<div class="card-desc'+(src.description?'':' empty')+'">'+(src.description?safeDesc:'No description.')+'</div>'+
                 subSection+
                 '<div class="card-footer">'+
                     '<span class="card-updated">External Source</span>'+
-                    '<a class="open-btn btn-source" href="'+openUrl+'" target="_blank">🔗 Open</a>'+
+                    '<a class="open-btn btn-source" href="'+safeOpenUrl+'" target="_blank">🔗 Open</a>'+
                 '</div>'+
             '</div>'+
         '</div>'
