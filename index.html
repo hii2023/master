@@ -481,16 +481,16 @@ function ago(d) {
 
 const DEFAULT_LANGUAGE = 'Unknown';
 function titleCaseName(name='') {
-    return name.replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim()
-        .replace(/\b\w/g, c => c.toUpperCase());
+    return name.replace(/[-_]+/g,' ').split(' ').filter(Boolean)
+        .map(word => word.charAt(0).toLocaleUpperCase() + word.slice(1))
+        .join(' ');
 }
 function generateDescription(repo) {
     const pretty = titleCaseName(repo.name);
-    const language = repo.language || DEFAULT_LANGUAGE;
-    const lang = ` built with ${language}`;
-    if (repo.fork) return `Forked repository: ${pretty}${lang}.`;
-    if (repo.homepage) return `Live project: ${pretty}${lang}.`;
-    return `${pretty} repository${lang} on GitHub.`;
+    const langClause = repo.language ? ` built with ${repo.language}` : '';
+    if (repo.fork) return `Forked repository: ${pretty}${langClause}.`;
+    if (repo.homepage) return `Live project: ${pretty}${langClause}.`;
+    return `${pretty} repository${langClause} on GitHub.`;
 }
 
 /* ── BUILD GITHUB REPO CARD ── */
