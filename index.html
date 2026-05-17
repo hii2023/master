@@ -485,10 +485,11 @@ function sentenceCaseName(name='') {
 }
 function generateDescription(repo) {
     const pretty = sentenceCaseName(repo.name);
-    const lang = repo.language ? ` built with ${repo.language}` : '';
+    const language = repo.language || 'Unknown';
+    const lang = ` built with ${language}`;
     if (repo.fork) return `Forked repository: ${pretty}${lang}.`;
     if (repo.homepage) return `Live project: ${pretty}${lang}.`;
-    return `${pretty}${lang || ' repository'} on GitHub.`;
+    return `${pretty} repository${lang} on GitHub.`;
 }
 
 /* ── BUILD GITHUB REPO CARD ── */
